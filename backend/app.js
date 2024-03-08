@@ -13,6 +13,10 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+const userRouter = require("./routes/userRoutes.js");
+
+app.use("/api/user", userRouter);
+
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({
     path: "./.env",
