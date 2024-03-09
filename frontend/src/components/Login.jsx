@@ -18,10 +18,14 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`${server}/user/login`, {
-        email,
-        password,
-      })
+      .post(
+        `${server}/user/login`,
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         setEmail("");
         setPassword("");

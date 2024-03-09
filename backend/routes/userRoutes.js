@@ -1,7 +1,9 @@
 const express = require("express");
 const User = require("../models/User");
 const userRouter = express.Router();
-
+const sendToken = require("../utils/jwtToken");
+const catchError = require("../middleware/catchError");
+const ErrorHandler = require("../utils/ErrorHandler");
 userRouter.post("/signUp", async (req, res) => {
   const { name, email, password } = req.body;
   const userExists = await User.findOne({ email });
@@ -25,21 +27,33 @@ userRouter.post("/signUp", async (req, res) => {
   }
 });
 
-userRouter.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email }).select("+password");
-  if (!user) {
-    return res.status(400).json({ message: "User doesn't exists!" });
-  }
-  const isPasswordValid = await user.comparePassword(password);
-  if (!isPasswordValid) {
-    return res.status(400).json({ message: "Invalid Email or Password" });
-  }
-  res.status(200).json({
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-  });
-});
+userRouter.post(
+  "/login",
+  catchError(async (req, res,next) => {
+    try {
+      const { email, password } = req.body;
+      const user = await User.findOne({ email }).select("+password");
+      if (!user) {
+        return next(new ErrorHandler("User doesn't exists!", 400));
+      }
+      const isPasswordValid = await user.comparePassword(password);
+      if (!isPasswordValid) {
+        return next(
+          new ErrorHandler("Please provide the correct information", 400)
+        );
+      }
+      // console.log(res)
+      // res.status(200).json({
+      //   _id: user._id,
+      //   name: user.name,
+      //   email: user.email,
+      // });
+      sendToken(user, 201, res);
+     
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
 
 module.exports = userRouter;
