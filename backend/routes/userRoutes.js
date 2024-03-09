@@ -1,9 +1,10 @@
 const express = require("express");
-const User = require("../models/User");
+const User = require("../models/user");
 const userRouter = express.Router();
 const sendToken = require("../utils/jwtToken");
 const catchError = require("../middleware/catchError");
 const ErrorHandler = require("../utils/ErrorHandler");
+const { isAuthenticated } = require("../middleware/auth");
 userRouter.post("/signUp", async (req, res) => {
   const { name, email, password } = req.body;
   const userExists = await User.findOne({ email });
@@ -29,7 +30,7 @@ userRouter.post("/signUp", async (req, res) => {
 
 userRouter.post(
   "/login",
-  catchError(async (req, res,next) => {
+  catchError(async (req, res, next) => {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email }).select("+password");
@@ -49,11 +50,29 @@ userRouter.post(
       //   email: user.email,
       // });
       sendToken(user, 201, res);
-     
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
   })
 );
 
+userRouter.get(
+  "/getUser",
+  isAuthenticated,
+  catchError(async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user.id);
+      if (!user) {
+        return next(new ErrorHandler("User doesn't exist", 400));
+      }
+
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
 module.exports = userRouter;
