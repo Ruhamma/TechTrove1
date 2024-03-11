@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema({
   },
   quantity: {
     type: Number,
-    required: [true, "Product quantity missing"],
+    // required: [true, "Product quantity missing"],
   },
   category: [
     {
@@ -40,11 +40,11 @@ const productSchema = new mongoose.Schema({
     {
       public_id: {
         type: String,
-        required: true,
+        // required: true,
       },
       url: {
         type: String,
-        required: true,
+        // required: true,
       },
     },
   ],

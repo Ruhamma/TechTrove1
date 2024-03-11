@@ -5,6 +5,7 @@ const sendToken = require("../utils/jwtToken");
 const catchError = require("../middleware/catchError");
 const ErrorHandler = require("../utils/ErrorHandler");
 const { isAuthenticated } = require("../middleware/auth");
+
 userRouter.post("/signUp", async (req, res) => {
   const { name, email, password } = req.body;
   const userExists = await User.findOne({ email });

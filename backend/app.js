@@ -14,8 +14,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 const userRouter = require("./routes/userRoutes.js");
+const productRouter=require("./routes/productRoutes.js")
 
 app.use("/api/user", userRouter);
+app.use("/api/product", productRouter);
+
 
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({

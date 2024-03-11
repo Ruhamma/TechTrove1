@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { server } from "../server";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 function SignUp() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -24,7 +25,7 @@ function SignUp() {
         password,
       })
       .then((res) => {
-        //   toast.success(res.data.message);
+        toast.success(res.data.message);
         setName("");
         setEmail("");
         setPassword("");
@@ -32,7 +33,7 @@ function SignUp() {
         navigate("/login");
       })
       .catch((error) => {
-        // toast.error(error.response.data.message);
+        toast.error(error.response.data.message);
       });
   };
   return (
