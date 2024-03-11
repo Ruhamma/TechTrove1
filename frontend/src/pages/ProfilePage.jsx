@@ -26,7 +26,9 @@ function ProfilePage() {
           .put(
             `${server}/user/update-avatar`,
             { avatar: reader.result },
-            { withCredential: true }
+            {
+              withCredentials: true,
+            }
           )
           .then((res) => {
             console.log(res);
@@ -38,26 +40,50 @@ function ProfilePage() {
           });
       }
     };
+    reader.readAsDataURL(e.target.files[0]);
   };
+
+  const handleAddressChange = (e) => {
+    e.preventDefault();
+    console.log("address change");
+  }
   return (
     <div>
-     {user ? (
-      <div>
-        Profile
-        <br />
-        {user.name}
-        <br />
-        Phone number: {user.phoneNumber}
-        <br />
-        Email: {user.email}
-        <br />
-        Address: {user.addresses[0]}
-        <button onClick={handleImageChange}>Add Image</button>
-        {/* here we can add image or edit image if there's already an image */}
-      </div>
-     ) : (
-      <p>loading</p>
-     )}
+      {user ? (
+        <div>
+          Profile
+          <br />
+          {user.name}
+          <br />
+          Phone number: {user.phoneNumber}
+          <br />
+          Email: {user.email}
+          <br />
+          {user.addresses[0] ? (
+            <p>Address: {user.addresses[0]}  
+              <form onSubmit={handleAddressChange}>
+
+              </form>
+            </p>
+          ) : (
+            <p>Address: No address</p>
+          )}
+          Address: {user.addresses[0]}
+          {user?.avatar?.url ? (
+            <img
+              src={user.avatar.url}
+              className="w-[150px] h-[150px] rounded-full object-cover border-[3px] border-[#3ad132]"
+              alt=""
+            />
+          ) : (
+            <p>high</p>
+          )}
+          <input type="file" id="image" onChange={handleImageChange} />
+          {/* here we can add image or edit image if there's already an image */}
+        </div>
+      ) : (
+        <p>loading</p>
+      )}
     </div>
   );
 }
