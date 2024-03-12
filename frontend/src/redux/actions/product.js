@@ -1,5 +1,6 @@
 import axios from "axios";
 import { server } from "../../server";
+import { toast } from "react-toastify";
 
 export const getAllProducts = () => async (dispatch) => {
   try {
@@ -39,6 +40,26 @@ export const addProduct = (productData) => {
         type: "ProductCreateFail",
         payload: error.response.data.message,
       });
+    }
+  };
+};
+
+export const deleteProduct = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "ProductDeleteRequest" });
+      const { data } = await axios.delete(
+        `${server}/product/adminDeleteProduct/${id}`,
+        { withCredentials: true }
+      );
+      dispatch({ type: "ProductDeleteSuccess", payload: data.message });
+      toast.success(data.message);
+    } catch (error) {
+      dispatch({
+        type: "ProductDeleteFail",
+        payload: error.response.data.message,
+      });
+      toast.error("Couldn't delete the product try again");
     }
   };
 };

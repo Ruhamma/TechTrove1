@@ -26,7 +26,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/create-product" element={<AdminCreateProduct />} />
+          <Route path="/admin-dashboard" element={<AdminCreateProduct />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
         <ToastContainer

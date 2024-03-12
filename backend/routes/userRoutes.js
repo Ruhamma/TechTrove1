@@ -220,7 +220,6 @@ userRouter.put(
   isAuthenticated,
   catchError(async (req, res, next) => {
     try {
-      console.log("olaaaaaaaa");
       const user = await User.findById(req.user.id);
       if (!user) throw new Error("User doesn't exist");
 

@@ -4,7 +4,7 @@ const catchError = require("../middleware/catchError");
 const ErrorHandler = require("../utils/ErrorHandler");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
 const productRouter = express.Router();
-
+const cloudinary=require("cloudinary")
 //Get all products for user
 productRouter.get("/getProducts", async (req, res) => {
   try {
@@ -17,11 +17,35 @@ productRouter.get("/getProducts", async (req, res) => {
 
 //Add products
 productRouter.post(
-  "/adminAddProduct",isAuthenticated,
+  "/adminAddProduct",
+  isAuthenticated,
   isAdmin,
   catchError(async (req, res, next) => {
     try {
+        let images = [];
+
+      if (typeof req.body.images === "string") {
+        images.push(req.body.images);
+      } else {
+        images = req.body.images;
+      }
+
+      const imagesLinks = [];
+
+      for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.uploader.upload(images[i], {
+          folder: "products",
+        });
+
+        imagesLinks.push({
+          public_id: result.public_id,
+          url: result.secure_url,
+        });
+      }
+
       const productData = req.body;
+      productData.images = imagesLinks;
+
       const product = await Product.create(productData);
       if (!product._id) throw new ErrorHandler("Product not created", 400);
       res.status(201).json({ success: true, data: product });
@@ -56,7 +80,7 @@ productRouter.get(
 //delete product
 
 productRouter.delete(
-  "/adminDeleteProduct",
+  "/adminDeleteProduct/:id",
   isAuthenticated,
   isAdmin,
   catchError(async (req, res, next) => {
@@ -66,7 +90,11 @@ productRouter.delete(
         return next(new ErrorHandler("No product found", 404));
       }
 
-      //add image deletion here
+      for (let i = 0; i < product.images.length; i++) {
+        const result = await cloudinary.v2.uploader.destroy(
+          product.images[i].public_id
+        );
+      }
 
       res.status(201).json({
         success: true,
