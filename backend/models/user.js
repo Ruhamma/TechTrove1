@@ -15,6 +15,9 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is missing"],
     minLength: [8, "Password length less than 8"],
   },
+  phoneNumber: {
+    type: String,
+  },
   role: {
     type: String,
     default: "user",
@@ -43,6 +46,7 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+
   createdAt: {
     type: Date,
     default: Date.now(),

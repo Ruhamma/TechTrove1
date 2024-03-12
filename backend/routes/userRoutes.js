@@ -116,4 +116,143 @@ userRouter.put(
     }
   })
 );
+//Add address
+userRouter.put(
+  "/add-address",
+  isAuthenticated,
+  catchError(async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user.id);
+      if (!user) throw new Error("User doesn't exist");
+
+      user.addresses.push(req.body);
+      await user.save();
+
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+//Update Address
+userRouter.put(
+  "/update-address",
+  isAuthenticated,
+  catchError(async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user.id);
+      const existAddress = user.addresses.find(
+        (address) => address._id.toString() === req.body.id
+      );
+      if (existAddress) {
+        existAddress.country = req.body.country;
+        existAddress.city = req.body.city;
+        existAddress.address1 = req.body.address1;
+        existAddress.address2 = req.body.address2;
+        await user.save();
+      }
+
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+//Delete Address
+userRouter.put(
+  "/delete-address/:id",
+  isAuthenticated,
+  catchError(async (req, res, next) => {
+    try {
+      const userId = req.user._id;
+      const addressId = req.params.id;
+      await User.updateOne(
+        { _id: userId },
+        { $pull: { addresses: { _id: addressId } } }
+      );
+      const user = await User.findById(userId);
+
+      res.status(200).json({ success: true, user });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+//Update information(name,email,phoneNumber)
+
+userRouter.put(
+  "/update-info",
+  isAuthenticated,
+  catchError(async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user.id);
+      if (!user) throw new Error("User doesn't exist");
+
+      const isPassword = await user.comparePassword(req.body.cPassword);
+      if (!isPassword) {
+        return next(new ErrorHandler("Password is incorrect", 400));
+      }
+      user.name = req.body.name;
+      user.email = req.body.email;
+      user.phoneNumber = req.body.phoneNumber;
+      await user.save();
+      res.status(201).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+//Change Password
+userRouter.put(
+  "/change-password",
+  isAuthenticated,
+  catchError(async (req, res, next) => {
+    try {
+      console.log("olaaaaaaaa");
+      const user = await User.findById(req.user.id);
+      if (!user) throw new Error("User doesn't exist");
+
+      const isPassword = await user.comparePassword(req.body.cPassword);
+      if (!isPassword) {
+        return next(new ErrorHandler("Password is incorrect", 400));
+      }
+      user.password=req.body.password;
+      await user.save();
+      res.status(201).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+//Logout
+userRouter.get(
+  "/logout",
+  isAuthenticated,
+  catchError(async (req, res, next) => {
+    try {
+      res.clearCookie("token");
+      res.status(200).json({
+        success: true,
+        message: "Logged out",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
 module.exports = userRouter;
