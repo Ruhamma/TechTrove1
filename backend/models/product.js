@@ -12,16 +12,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     // required: [true, "Product quantity missing"],
   },
-  category: [
-    {
-      name: {
-        type: String,
-        required: true,
-        index: true,
-      },
-    },
-  ],
-
+  category: { type: String },
   price: {
     type: Number,
     required: [true, "Product price missing"],

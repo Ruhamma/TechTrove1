@@ -1,13 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.share-tech-regular {
+  font-family: "Share Tech", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background-color: #020309; */
+  /* background: rgb(2,0,36), */
+  background: linear-gradient(
+    70deg,
+    rgb(3, 3, 18),
+    rgb(3, 3, 24),
+    rgb(0, 2, 2)
+  );
+  color: white;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+/* .pattern {
+  background-image: url("./assets/images/pngwing.com.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.5;
+} */
+.pattern {
+  position: relative;
+}
+
+.pattern::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("./assets/images/pngwing.com.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.08;
+  z-index: -1;
+}
+
+.discount {
+  position: relative;
+}
+
+.discount::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("./assets/images/pngwing.co.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.4;
+  /* z-index: -1; */
+}
+.featureCar .splide__arrows,
+.featureCarPage .splide__arrows {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.featureCar .splide__arrow,
+.featureCarPage .splide__arrow {
+  pointer-events: all;
+}
+
+.featureCar .splide__arrow--prev {
+  left: -1em; /* Adjust as needed */
+}
+.featureCar .splide__arrow--next {
+  right: -1em; /* Adjust as needed */
+}
+.featureCarPage .splide__arrow--prev {
+  left: 1em; /* Adjust as needed */
+}
+.featureCarPage .splide__arrow--next {
+  right: 1em; /* Adjust as needed */
+}
+.dropdown-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
 }

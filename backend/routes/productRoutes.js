@@ -4,7 +4,7 @@ const catchError = require("../middleware/catchError");
 const ErrorHandler = require("../utils/ErrorHandler");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
 const productRouter = express.Router();
-const cloudinary=require("cloudinary")
+const cloudinary = require("cloudinary");
 //Get all products for user
 productRouter.get("/getProducts", async (req, res) => {
   try {
@@ -22,7 +22,7 @@ productRouter.post(
   isAdmin,
   catchError(async (req, res, next) => {
     try {
-        let images = [];
+      let images = [];
 
       if (typeof req.body.images === "string") {
         images.push(req.body.images);
@@ -106,4 +106,53 @@ productRouter.delete(
   })
 );
 
+//edit product
+productRouter.put(
+  "/adminEditProduct",
+  isAuthenticated,
+  isAdmin,
+  catchError(async (req, res, next) => {
+    try {
+      const product = await Product.findById(req.body.id);
+      if (!product) {
+        return next(new ErrorHandler("No product found", 404));
+      }
+      let images = [];
+      if (typeof req.body.images === "string") {
+        images.push(req.body.images);
+      } else {
+        images = req.body.images;
+      }
+      const oldImages = product.images;
+      const newImages = [];
+      for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.uploader.upload(images[i], {
+          folder: "products",
+        });
+        newImages.push({
+          public_id: result.public_id,
+          url: result.secure_url,
+        });
+      }
+      const productData = req.body;
+      productData.images = newImages;
+      const updatedProduct = await Product.findById(req.body.id);
+      updatedProduct.productName = req.body.productName;
+      updatedProduct.description = req.body.description;
+      updatedProduct.price = req.body.price;
+      updatedProduct.discountPrice = req.body.discountPrice;
+      updatedProduct.images = req.body.images;
+      await updatedProduct.save();
+      for (let i = 0; i < oldImages.length; i++) {
+        await cloudinary.v2.uploader.destroy(oldImages[i].public_id);
+      }
+      res.status(201).json({
+        success: true,
+        message: "Product updated",
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
 module.exports = productRouter;

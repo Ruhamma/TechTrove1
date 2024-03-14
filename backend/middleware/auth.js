@@ -19,7 +19,6 @@ exports.isAuthenticated = catchError(async (req, res, next) => {
 
 // Checks whether the user is an admin or not
 exports.isAdmin = (req, res, next) => {
-  console.log(req.user);
   if (req.user.role !== "admin") {
     return next(
       new ErrorHandler(
@@ -29,4 +28,4 @@ exports.isAdmin = (req, res, next) => {
     );
   }
   next();
-}
+};

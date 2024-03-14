@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, deleteProduct } from "../../redux/actions/product";
+import {
+  addProduct,
+  deleteProduct,
+  editProductAdmin,
+} from "../../redux/actions/product";
 import { server } from "../../server";
 import axios from "axios";
+const initialState = {
+  id: "",
+  productName: "",
+  description: "",
+  price: "",
+  discountPrice: "",
+};
 function AdminCreateProduct() {
   const { success, error } = useSelector((state) => state.products);
   const dispatch = useDispatch();
@@ -12,6 +23,10 @@ function AdminCreateProduct() {
   const [discountPrice, setDiscountPrice] = useState();
   const [products, setProducts] = useState([]);
   const [images, setImages] = useState([]);
+  const [editProduct, setEditProduct] = useState(null);
+  const [editProductValues, setEditProductValues] = useState(initialState);
+  const [editImages, setEditImages] = useState([]);
+
   useEffect(() => {
     axios
       .get(`${server}/product/adminGetProducts`, { withCredentials: true })
@@ -61,8 +76,52 @@ function AdminCreateProduct() {
     setImages([]);
   };
   const handleDelete = (id) => {
-    console.log(id);
     dispatch(deleteProduct(id));
+  };
+  const handleEdit = (product) => {
+    setEditProduct(product);
+    setEditProductValues({
+      id: product._id,
+      productName: product.productName,
+      description: product.description,
+      price: product.price,
+      discountPrice: product.discountPrice,
+    });
+    setEditImages(product.images);
+  };
+  const handleImageEdit=(e)=>{
+   const files = Array.from(e.target.files);
+   const filePromises = files.map((file) => {
+     return new Promise((resolve, reject) => {
+       const reader = new FileReader();
+       reader.onload = (e) => resolve(e.target.result);
+       reader.onerror = (error) => reject(error);
+       reader.readAsDataURL(file);
+     });
+   });
+
+   Promise.all(filePromises)
+     .then((results) => {
+       setEditImages(results);
+     })
+     .catch((error) => console.log(error));
+  }
+  const handleSaveEdit = () => {
+    dispatch(
+      editProductAdmin(
+        editProductValues.id,
+        editProductValues.productName,
+        editProductValues.description,
+        editProductValues.price,
+        editProductValues.discountPrice,
+        editImages
+      )
+    );
+
+    // setEditProduct(null);
+  };
+  const handleCancelEdit = () => {
+    setEditProduct(null);
   };
   return (
     <div>
@@ -116,12 +175,90 @@ function AdminCreateProduct() {
       </form>
       All products
       {products &&
-        products.map((product) => {
+        products.map((product, index) => {
           return (
-            <div>
-              <p>{product.productName}</p>
-              <p>{product.price}</p>
+            <div key={index}>
+              <p>name</p>
+              {editProduct === product ? (
+                <input
+                  type="text"
+                  value={editProductValues.productName}
+                  onChange={(e) =>
+                    setEditProductValues({
+                      ...editProductValues,
+                      productName: e.target.value,
+                    })
+                  }
+                />
+              ) : (
+                <p>{product.productName}</p>
+              )}
+              <p>description</p>
+              {editProduct === product ? (
+                <input
+                  type="text"
+                  value={editProductValues.description}
+                  onChange={(e) =>
+                    setEditProductValues({
+                      ...editProductValues,
+                      description: e.target.value,
+                    })
+                  }
+                />
+              ) : (
+                <p>{product.description}</p>
+              )}
+              <p>price</p>
+              {editProduct === product ? (
+                <input
+                  type="number"
+                  value={editProductValues.price}
+                  onChange={(e) =>
+                    setEditProductValues({
+                      ...editProductValues,
+                      price: e.target.value,
+                    })
+                  }
+                />
+              ) : (
+                <p>{product.price}</p>
+              )}
+              <p>discount price</p>
+              {editProduct === product ? (
+                <input
+                  type="number"
+                  value={editProductValues.discountPrice}
+                  onChange={(e) =>
+                    setEditProductValues({
+                      ...editProductValues,
+                      discountPrice: e.target.value,
+                    })
+                  }
+                />
+              ) : (
+                <p>{product.discountPrice}</p>
+              )}
+
+              <p>images</p>
+              {product.images.map((i) => (
+                <img src={i.url} key={i.url} alt="" />
+              ))}
+              <input
+                type="file"
+                name=""
+                id="upload"
+                multiple
+                onChange={(e) => handleImageEdit(e)}
+              />
               <button onClick={() => handleDelete(product._id)}>delete</button>
+              {editProduct === product ? (
+                <div>
+                  <button onClick={() => handleSaveEdit}>Save</button>
+                  <button onClick={() => handleCancelEdit}>Cancel</button>
+                </div>
+              ) : (
+                <button onClick={() => handleEdit(product)}>edit</button>
+              )}
             </div>
           );
         })}

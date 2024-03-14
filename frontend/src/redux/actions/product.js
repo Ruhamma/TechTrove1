@@ -63,3 +63,20 @@ export const deleteProduct = (id) => {
     }
   };
 };
+export const editProductAdmin=(id,productName,description,price,discountPrice,images)=>{
+  return async (dispatch)=>{
+    try {
+      dispatch({type:"ProductEditRequest"});
+      const { data } = await axios.put(
+        `${server}/product/adminEditProduct`,
+        { id, productName, description, price, discountPrice, images },
+        { withCredentials: true }
+      );
+      dispatch({type:"ProductEditSuccess",payload:data.message});
+      toast.success(data.message);
+    } catch (error) {
+      dispatch({type:"ProductEditFail",payload:error.response.data.message});
+      toast.error("Couldn't edit the product try again");
+    }
+  }
+}
