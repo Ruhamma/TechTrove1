@@ -5,6 +5,7 @@ import {
   SignUpPage,
   HomePage,
   ProfilePage,
+  CartPage,
 } from "./routes/Route.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Store from "./redux/store.js";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/admin-dashboard" element={<AdminCreateProduct />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
         <ToastContainer
           position="top-center"

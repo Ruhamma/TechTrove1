@@ -5,7 +5,6 @@ import ProductCard from "../components/ProductCard.jsx";
 import { Link } from "react-router-dom";
 import { removeFromCart } from "../redux/actions/cart.js";
 import { AiOutlineSearch } from "react-icons/ai";
-
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 function HomePage() {
   const { products } = useSelector((state) => state.products);

@@ -14,7 +14,7 @@ function ProductCard({ data }) {
   const [click, setClick] = useState(false);
   const dispatch = useDispatch();
   const handleCart = () => {
-    const cartData = { ...data, qty: 1 };
+    const cartData = { ...data};
     dispatch(addToCart(cartData));
   };
   const handleWishlistAddition = () => {

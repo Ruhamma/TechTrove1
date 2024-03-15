@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Avatar from "react-avatar";
 import { RxAvatar } from "react-icons/rx";
@@ -8,17 +8,23 @@ import {
   AiOutlineSearch,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { IoBagOutline } from "react-icons/io5";
+import { FaRegTrashCan } from "react-icons/fa6";
 import Collapsible from "react-collapsible";
 import { IoMdArrowDropdown, IoMdArrowDropup, IoMdClose } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { removeFromWishlist } from "../redux/actions/wishlist";
+import { addToCart } from "../redux/actions/cart";
 function Nav() {
   const { products } = useSelector((state) => state.products);
+  const { wishlist } = useSelector((state) => state.wishlist);
   const { user, isAuthenticated } = useSelector((state) => state.user);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [click, setClick] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState(null);
+  const [openWishlist, setOpenWishlist] = useState(false);
   const handleCategoryChange = (option) => {
     setSelectedCategory(option.value);
   };
@@ -60,8 +66,17 @@ function Nav() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+  const dispatch = useDispatch();
+
+  const removeFromWishlistHandler = (data) => {
+    dispatch(removeFromWishlist(data));
+  };
+  const addToCartHandler = (data) => {
+    const newData = { ...data, qty: 1 };
+    dispatch(addToCart(newData));
+  };
   return (
-    <div className="flex items-center  justify-around py-3 ">
+    <div className="flex items-center  justify-around py-3 relative">
       <div className="md:hidden w-[33.3%] pl-5">
         <RxHamburgerMenu size={30} onClick={toggleMenu} />
       </div>
@@ -141,7 +156,7 @@ function Nav() {
         <Link to="/contact" className=" ">
           Contact Us
         </Link>
-        <div className=" relative flex ">
+        <div className=" relative flex z-30 ">
           <div className="dropdown-container w-fit" onClick={handleClick}>
             <Collapsible
               triggerStyle={{
@@ -204,25 +219,33 @@ function Nav() {
           </div>
         </div>
       </div>
-      <p className="text-3xl md:text-3xl w-[42%]  text-center share-tech-regular">
+
+      <Link
+        className="text-3xl md:text-3xl w-[42%]  text-center share-tech-regular"
+        to="/"
+      >
         Tech Trove
-      </p>
+      </Link>
 
       <div className="flex gap-2 md:gap-10 w-[32%] justify-center items-center">
-        <AiOutlineShoppingCart
-          color="white"
-          title="Add to cart"
-          className="cursor-pointer text-[20px] md:text-[25px] lg:text-[30px] "
-          size={30}
-        />
-        <Link to={`/wishlist`}>
+        <Link to="/cart">
+          <IoBagOutline
+            color="white"
+            title="Add to cart"
+            className="cursor-pointer text-[20px] md:text-[25px] lg:text-[30px] "
+            size={30}
+          />
+        </Link>
+
+        <div className="relative">
           <AiOutlineHeart
             color="white"
             title="Add to cart"
             className="cursor-pointer text-[20px] hidden md:block md:text-[25px] lg:text-[30px] "
             size={30}
+            onClick={() => setOpenWishlist(true)}
           />
-        </Link>
+        </div>
         {isAuthenticated ? (
           user?.avatar?.url ? (
             <Link to="/profile">
@@ -243,6 +266,70 @@ function Nav() {
           </Link>
         )}
       </div>
+      {openWishlist ? (
+        <div className="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-90 z-50">
+          <div className="overflow-y-scroll fixed top-0 right-0 w-full sm:w-[70%] lg:w-[60%] xl:w-[40%]  text-white  h-full flex flex-col  bg-slate-900/70 shadow-sm">
+            <div className="flex justify-between items-center p-5 mb-10">
+              <h1 className="text-3xl font-bold">Wishlist</h1>
+              <IoMdClose
+                className="text-3xl cursor-pointer"
+                onClick={() => setOpenWishlist(false)}
+              />
+            </div>
+            <div className="flex flex-col gap-20 p-5 ">
+              {wishlist.length === 0 ? (
+                <h1 className="text-xl text-center">No items in wishlist</h1>
+              ) : (
+                wishlist.map((i, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between gap-10 "
+                    >
+                      <div className="flex gap-5">
+                        <img
+                          src={i.images[0].url}
+                          alt="picture"
+                          className="w-[80px] h-[80px] md:w-[106px] md:h-[106px] object-cover object-center"
+                        />
+                        <div>
+                          <Link to={`/product/${i.productName}`}>
+                            <p className="text-base sm:text-lg md:text-xl font-semibold pb-3">
+                              {i.productName}
+                            </p>
+                          </Link>
+                          <p className="text-sm md:text-base text-gray-500 pb-2">
+                            Computers
+                          </p>
+                          <p className="text-sm md:text-lg pb-2 hidden md:block">
+                            ETB {i.discountPrice}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex gap-5">
+                        <button
+                          className="bg-slate-500/30 py-2 px-5 rounded-lg"
+                          onClick={() => addToCartHandler(i)}
+                        >
+                          {/* Add to cart */}
+                          <AiOutlineShoppingCart />
+                        </button>
+                        <button
+                          className="bg-slate-500/10 py-2 px-5 rounded-lg"
+                          onClick={() => removeFromWishlistHandler(i)}
+                        >
+                          {/* Remove */}
+                          <FaRegTrashCan color="white"/>
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
