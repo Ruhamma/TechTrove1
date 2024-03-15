@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
 import { RxAvatar } from "react-icons/rx";
 import {
@@ -25,8 +25,10 @@ function Nav() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState(null);
   const [openWishlist, setOpenWishlist] = useState(false);
+  const navigate = useNavigate();
   const handleCategoryChange = (option) => {
-    setSelectedCategory(option.value);
+    setSelectedCategory(option);
+    navigate(`/products?category=${option}`);
   };
   const handleClick = () => {
     setClick(!click);
@@ -319,7 +321,7 @@ function Nav() {
                           onClick={() => removeFromWishlistHandler(i)}
                         >
                           {/* Remove */}
-                          <FaRegTrashCan color="white"/>
+                          <FaRegTrashCan color="white" />
                         </button>
                       </div>
                     </div>

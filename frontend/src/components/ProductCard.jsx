@@ -29,7 +29,7 @@ function ProductCard({ data }) {
   };
 
   return (
-    <div className="flex text-white rounded border-2 border-black/20  mt-10  w-[155px] h-[210px] sm:w-[175px] sm:h-[240px] md:w-[205px] md:h-[270px] flex-col shadow-md">
+    <div className="flex text-white rounded-lg border-2 border-black/20  bg-slate-00  mt-10  w-[155px] h-[210px] sm:w-[175px] sm:h-[240px] md:w-[205px] md:h-[270px] flex-col shadow-md">
       <div className=" relative overflow-hidden h-[180px] w-full mb-[10px] rounded-lg group ">
         <Link to={`/product}`}>
           {data && data.images[0].url ? (
@@ -41,14 +41,14 @@ function ProductCard({ data }) {
           ) : null}
         </Link>
       </div>
-      <div className="flex gap-2 p-2 flex-col bg-black/50">
+      <div className="flex gap-2 p-2 flex-col bg-black/30">
         <Link
           to={`/product`}
           className="text-lg font-semibold share-tech-regular"
         >
           <p>{data.productName}</p>
         </Link>
-        <p className="text-gray-600">{data.price} ETB</p>
+        <p className="text-gray-600">{data.discountPrice} ETB</p>
         <div className="flex items-center justify-between item-center ">
           <button onClick={handleCart}>
             <AiOutlineShoppingCart

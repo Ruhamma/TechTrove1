@@ -3,4 +3,5 @@ import LoginPage from "../pages/LoginPage.jsx";
 import HomePage from "../pages/HomePage.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import CartPage from "../pages/CartPage.jsx";
-export { SignUpPage, LoginPage, HomePage, ProfilePage, CartPage };
+import ProductPage from "../pages/ProductPage.jsx";
+export { SignUpPage, LoginPage, HomePage, ProfilePage, CartPage, ProductPage };

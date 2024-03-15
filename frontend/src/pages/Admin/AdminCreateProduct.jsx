@@ -126,9 +126,10 @@ function AdminCreateProduct() {
   return (
     <div>
       <h1>Create Product</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="className=text-red-900">
         <label htmlFor="">Name</label>
         <input
+          className="text-red-900"
           type="text"
           name="name"
           value={productName}
@@ -138,6 +139,7 @@ function AdminCreateProduct() {
         />
         <label htmlFor="">Description</label>
         <input
+          className="text-red-900"
           type="text"
           name="description"
           value={description}
@@ -147,6 +149,7 @@ function AdminCreateProduct() {
         />
         <label>Original Price</label>
         <input
+          className="text-red-900"
           type="number"
           name="price"
           value={price}
@@ -155,6 +158,7 @@ function AdminCreateProduct() {
         />
         <label>Discount Price</label>
         <input
+          className="text-red-900"
           type="number"
           name="price"
           value={discountPrice}
@@ -181,6 +185,7 @@ function AdminCreateProduct() {
               <p>name</p>
               {editProduct === product ? (
                 <input
+                  className="text-red-900"
                   type="text"
                   value={editProductValues.productName}
                   onChange={(e) =>
@@ -196,6 +201,7 @@ function AdminCreateProduct() {
               <p>description</p>
               {editProduct === product ? (
                 <input
+                  className="text-red-900"
                   type="text"
                   value={editProductValues.description}
                   onChange={(e) =>
@@ -211,6 +217,7 @@ function AdminCreateProduct() {
               <p>price</p>
               {editProduct === product ? (
                 <input
+                  className="text-red-900"
                   type="number"
                   value={editProductValues.price}
                   onChange={(e) =>
@@ -226,6 +233,7 @@ function AdminCreateProduct() {
               <p>discount price</p>
               {editProduct === product ? (
                 <input
+                  className="text-red-900"
                   type="number"
                   value={editProductValues.discountPrice}
                   onChange={(e) =>
