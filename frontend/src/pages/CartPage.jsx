@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "../redux/actions/cart";
 import Nav from "../components/Nav";
@@ -11,7 +11,7 @@ import ProductCard from "../components/ProductCard";
 function CartPage() {
   const { cart } = useSelector((state) => state.cart);
   const { products } = useSelector((state) => state.products);
-
+  const [suggestedProducts,setSuggestedProducts]=useState([])
   const dispatch = useDispatch();
   const handleRemoveFromCart = (data) => {
     dispatch(removeFromCart(data));
@@ -52,6 +52,27 @@ function CartPage() {
     });
     return total;
   };
+const suggestProducts = (products, wishlist) => {
+  const uniqueCategories = Array.from(
+    new Set(wishlist.map((item) => item.category))
+  );
+  const randomize = () => Math.random() - 0.5;
+  const filteredProducts = products
+    .filter((product) => uniqueCategories.includes(product.category))
+    .sort(randomize);
+
+  return filteredProducts.slice(0, 6);
+};
+
+useEffect(() => {
+  const generateRandomSuggestions = () => {
+    const suggestions = suggestProducts(products, cart);
+    setSuggestedProducts(suggestions);
+  };
+
+  generateRandomSuggestions();
+}, [products, cart]);
+
   const splideOptions = {
     type: "loop",
     perPage: 1,
@@ -104,7 +125,7 @@ function CartPage() {
                         </p>
                       </Link>
                       <p className="text-sm md:text-base text-gray-500 pb-2">
-                        Computers
+                        {i.category}
                       </p>
                       <p>{i.qty} in stock</p>
                     </div>
@@ -179,8 +200,8 @@ function CartPage() {
       </p>
       <Splide options={splideOptions}>
         <div className="flex overflow-hidden gap-10 px-10">
-          {products &&
-            products.map((product, index) => {
+          {suggestedProducts &&
+            suggestedProducts.map((product, index) => {
               return (
                 <div className="">
                   <SplideSlide>

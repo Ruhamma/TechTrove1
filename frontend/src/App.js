@@ -7,6 +7,7 @@ import {
   ProfilePage,
   CartPage,
   ProductPage,
+  ProductDetailsPage,
 } from "./routes/Route.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Store from "./redux/store.js";
@@ -32,6 +33,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/products" element={<ProductPage />} />
+          <Route path="/product/:name" element={<ProductDetailsPage />} />
         </Routes>
         <ToastContainer
           position="top-center"
