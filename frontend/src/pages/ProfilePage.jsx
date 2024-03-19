@@ -157,9 +157,9 @@ function ProfilePage() {
       {user ? (
         <div>
           <Nav />
-          <div className="m-10 bg-slate-800/50 p-5 rounded-md flex min-h-[80vh] w-[80%] mx-auto">
+          <div className="m-10 bg-slate-800/50 p-5 rounded-md flex flex-col md:flex-row min-h-[80vh] md:w-[85%] lg:w-[80%] mx-auto">
             {/* Profile side bar */}
-            <div className="bg-slate-700 w-[20%] rounded-lg">
+            <div className="bg-slate-700 w-full md:w-[20%] rounded-lg">
               <div className=" rounded-lg flex flex-col items-center justify-center pt-5 ">
                 {user?.avatar?.url ? (
                   <img
@@ -176,6 +176,19 @@ function ProfilePage() {
                   />
                 )}
                 <p className="text-xl font-bold ">{user.name}</p>
+                <div>
+                  <label htmlFor="image" className="file-upload-button">
+                    <button type="button" className="mt-2">
+                      Change Image
+                    </button>
+                  </label>
+                  <input
+                    type="file"
+                    id="image"
+                    onChange={handleImageChange}
+                    style={{ display: "none" }}
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col gap-6  mt-10">
@@ -226,9 +239,9 @@ function ProfilePage() {
                 </div>
               </div>
             </div>
-            <div className="w-[80%]">
+            <div className="w-full md:w-[80%]">
               {selectedInfo === "personal" ? (
-                <div className="pl-10 h-full">
+                <div className="mt-10 md:mt-0 md:pl-10 h-full">
                   <div className="flex items-center ">
                     <BsInfoCircle size={50} />
                     <div className="pl-2">
@@ -381,7 +394,7 @@ function ProfilePage() {
               ) : selectedInfo === "addresses" ? (
                 <div>
                   {user.addresses ? (
-                    <div className="pl-10 h-full">
+                    <div className="mt-10 md:mt-0 md:pl-10 h-full">
                       <div className="flex items-center ">
                         <FaRegAddressBook size={50} />
                         <div className="pl-2">
@@ -399,11 +412,11 @@ function ProfilePage() {
                         className="flex flex-col gap-5 pt-10 mt-2"
                       >
                         <div className="bg-slate-800 p-2 rounded py-6">
-                          <div className="flex justify-center gap-20">
+                          <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-5 lg:gap-20">
                             <div className="flex items-center gap-2 ">
                               <IoPersonSharp
                                 size={40}
-                                className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
+                                className="hidden md:block box-shadow shadow-sm shadow-white p-2 rounded-full"
                               />
                               <div className="w-[50%]">
                                 <p className="text-gray-500">Country</p>
@@ -424,7 +437,7 @@ function ProfilePage() {
                             <div className="flex items-center gap-2">
                               <IoPersonSharp
                                 size={40}
-                                className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
+                                className=" hidden md:block box-shadow shadow-sm shadow-white p-2 rounded-full"
                               />
                               <div className="w-[50%]">
                                 <p className="text-gray-500">City</p>
@@ -443,11 +456,11 @@ function ProfilePage() {
                               </div>
                             </div>
                           </div>
-                          <div className="flex justify-center gap-20">
+                          <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-5 lg:gap-20">
                             <div className="flex items-center gap-2">
                               <FaAddressBook
                                 size={40}
-                                className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
+                                className="hidden md:block box-shadow shadow-sm shadow-white p-2 rounded-full"
                               />
                               <div className="w-[50%]">
                                 <p className="text-gray-500">Address 1</p>
@@ -468,7 +481,7 @@ function ProfilePage() {
                             <div className="flex items-center gap-2">
                               <FaAddressBook
                                 size={40}
-                                className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
+                                className="hidden md:block box-shadow shadow-sm shadow-white p-2 rounded-full"
                               />
                               <div className="w-[50%]">
                                 <p className="text-gray-500">Address 2</p>
@@ -507,7 +520,9 @@ function ProfilePage() {
                                 <th>Country</th>
                                 <th>City</th>
                                 <th>Address 1</th>
-                                <th>Address 2</th>
+                                <th className="hidden sm:table-cell">
+                                  Address 2
+                                </th>
                                 <th>Actions</th>
                               </tr>
                             </thead>
@@ -569,7 +584,7 @@ function ProfilePage() {
                                       </p>
                                     )}
                                   </td>
-                                  <td className="mb-2">
+                                  <td className="mb-2 hidden sm:table-cell ">
                                     {editAddress === address ? (
                                       <input
                                         type="text"
@@ -637,7 +652,7 @@ function ProfilePage() {
                   )}
                 </div>
               ) : selectedInfo === "password" ? (
-                <div className="pl-10 h-full">
+                <div className="mt-10 md:mt-0 md:pl-10 h-full">
                   <div className="flex items-center ">
                     <TbPasswordUser size={50} />
                     <div className="pl-2">
@@ -694,7 +709,7 @@ function ProfilePage() {
                   </button>{" "}
                 </div>
               ) : (
-                <div className="pl-10 h-full">
+                <div className="mt-10 md:mt-0 md:pl-10 h-full">
                   <div className="flex items-center ">
                     <CiShoppingCart size={50} />
                     <div className="pl-2">
@@ -707,9 +722,7 @@ function ProfilePage() {
                     </div>
                   </div>
                   {order && order.length > 0 ? (
-                    <ul
-                      className="mt-5 space-y-6 "
-                    >
+                    <ul className="mt-5 space-y-6 ">
                       {order.map((order) => (
                         <li
                           key={order._id}
@@ -768,16 +781,6 @@ function ProfilePage() {
             </div>
           </div>
 
-          {/* {user?.avatar?.url ? (
-            <img
-              src={user.avatar.url}
-              className="w-[150px] h-[150px] rounded-full object-cover border-[3px] border-[#3ad132]"
-              alt=""
-            />
-          ) : (
-            <p>high</p>
-          )}
-          <input type="file" id="image" onChange={handleImageChange} /> */}
           {/* here we can add image or edit image if there's already an image */}
         </div>
       ) : (
