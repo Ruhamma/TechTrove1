@@ -20,5 +20,19 @@ export const orderReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.payload;
       state.success = false;
+    })
+    .addCase("LoadOrderRequest", (state) => {
+      state.success = false;
+      state.loading = true;
+    })
+    .addCase("LoadOrderSuccess", (state, action) => {
+      state.loading = false;
+      state.order = action.payload;
+      state.success = true;
+    })
+    .addCase("LoadOrderFail", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+      state.success = false;
     });
 });

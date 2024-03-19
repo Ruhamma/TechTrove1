@@ -23,11 +23,7 @@ orderRouter.post(
   catchError(async (req, res, next) => {
     try {
       const { cartData, totalPrice, userId, address } = req.body;
-      const existingOrder = await Order.findOne({ userId });
-
-      if (existingOrder) {
-        throw new ErrorHandler("Order already exists for this user", 400);
-      }
+      console.log(cartData)
       const order = new Order({
         cart: cartData,
         totalPrice,
@@ -100,4 +96,17 @@ orderRouter.post("/create-paypal-order", async (req, res) => {
     res.status(500).json({ error: "Failed to create PayPal order" });
   }
 });
+
+orderRouter.get("/getUserOrder/:id",
+  catchError(async (req, res, next) => {
+  try {
+    const order = await Order.find({ userId: req.params.id }).populate(
+      "cart.cart"
+    );
+   
+     res.json(order);
+  } catch (error) {
+     res.status(500).json({ message: "Failed to fetch user orders" });
+  }
+}))
 module.exports = orderRouter;

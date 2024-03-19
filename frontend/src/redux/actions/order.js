@@ -32,3 +32,16 @@ export const addOrder = (orderData) => {
     }
   };
 };
+
+export const getUserOrder=(id)=>async(dispatch)=>{
+  try {
+     dispatch({ type: "LoadOrderRequest" });
+    const { data } = await axios.get(`${server}/order/getUserOrder/${id}`);
+    dispatch({ type: "LoadOrderSuccess", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "LoadProductFail",
+      payload: error.response.data.message,
+    });
+  }
+}

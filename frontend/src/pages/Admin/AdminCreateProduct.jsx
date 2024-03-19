@@ -27,6 +27,7 @@ function AdminCreateProduct() {
   const [editProductValues, setEditProductValues] = useState(initialState);
   const [editImages, setEditImages] = useState([]);
 
+ 
   useEffect(() => {
     axios
       .get(`${server}/product/adminGetProducts`, { withCredentials: true })
