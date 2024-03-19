@@ -8,11 +8,15 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { HiPlus, HiOutlineMinus } from "react-icons/hi";
 import { toast } from "react-toastify";
 import ProductCard from "../components/ProductCard";
+import { useNavigate } from "react-router-dom";
+
 function CartPage() {
   const { cart } = useSelector((state) => state.cart);
   const { products } = useSelector((state) => state.products);
-  const [suggestedProducts,setSuggestedProducts]=useState([])
+  const [suggestedProducts, setSuggestedProducts] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleRemoveFromCart = (data) => {
     dispatch(removeFromCart(data));
   };
@@ -52,26 +56,31 @@ function CartPage() {
     });
     return total;
   };
-const suggestProducts = (products, wishlist) => {
-  const uniqueCategories = Array.from(
-    new Set(wishlist.map((item) => item.category))
-  );
-  const randomize = () => Math.random() - 0.5;
-  const filteredProducts = products
-    .filter((product) => uniqueCategories.includes(product.category))
-    .sort(randomize);
+  const suggestProducts = (products, wishlist) => {
+    const uniqueCategories = Array.from(
+      new Set(wishlist.map((item) => item.category))
+    );
+    const randomize = () => Math.random() - 0.5;
+    const filteredProducts = products
+      .filter((product) => uniqueCategories.includes(product.category))
+      .sort(randomize);
 
-  return filteredProducts.slice(0, 6);
-};
-
-useEffect(() => {
-  const generateRandomSuggestions = () => {
-    const suggestions = suggestProducts(products, cart);
-    setSuggestedProducts(suggestions);
+    return filteredProducts.slice(0, 6);
   };
 
-  generateRandomSuggestions();
-}, [products, cart]);
+  useEffect(() => {
+    const generateRandomSuggestions = () => {
+      const suggestions = suggestProducts(products, cart);
+      setSuggestedProducts(suggestions);
+    };
+
+    generateRandomSuggestions();
+  }, [products, cart]);
+  const handleCheckout = () => {
+    const cartData = JSON.stringify({ cart, quantities });
+    localStorage.setItem("cartData", cartData);
+    navigate("/checkout");
+  };
 
   const splideOptions = {
     type: "loop",
@@ -106,7 +115,6 @@ useEffect(() => {
           {cart &&
             cart.map((i, index) => {
               const quantity = quantities[index];
-              console.log(i);
               return (
                 <div
                   key={index}
@@ -188,7 +196,10 @@ useEffect(() => {
               <p>ETB {calculateTotalCartPrice()}</p>
             </div>
 
-            <button className="bg-slate-500/50 hover:bg-slate-800 w-full p-2 mt-4 rounded-lg">
+            <button
+              onClick={handleCheckout}
+              className="bg-slate-500/50 hover:bg-slate-800 w-full p-2 mt-4 rounded-lg"
+            >
               Proceed to Checkout
             </button>
           </div>

@@ -53,12 +53,7 @@ productRouter.post(
       next(new ErrorHandler(err.message, 400));
     }
   })
-  //     res.status(201).json({
-  //       success: true,
-  //       product,
-  //     });
-  //   } catch (error) {}
-  // })
+  
 );
 
 //get products for admin

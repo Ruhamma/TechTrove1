@@ -8,6 +8,8 @@ import {
   CartPage,
   ProductPage,
   ProductDetailsPage,
+  CheckoutPage,
+  OrderSuccessPage,
 } from "./routes/Route.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Store from "./redux/store.js";
@@ -34,6 +36,10 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/product/:name" element={<ProductDetailsPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order-success" element={<OrderSuccessPage />} />
+
+          <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
         <ToastContainer
           position="top-center"

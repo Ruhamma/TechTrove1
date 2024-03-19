@@ -70,7 +70,7 @@ function ProductDetailsPage() {
                 <div
                   className={`${
                     select === 0 ? "border-2 border-slate-500 " : "null"
-                  } cursor-pointer flex justify-center border-2 w-32 h-36 rounded-xl`}
+                  } cursor-pointer flex justify-center border-2 w-28 h-32 sm:w-32 sm:h-36 rounded-xl`}
                 >
                   <img
                     src={product?.images[0]?.url}
@@ -82,7 +82,7 @@ function ProductDetailsPage() {
                 <div
                   className={`${
                     select === 1 ? "border-2 border-slate-500" : "null"
-                  } cursor-pointer flex justify-center border-2 w-32 h-36 rounded-xl`}
+                  } cursor-pointer flex justify-center border-2 w-28 h-32 sm:w-32 sm:h-36 rounded-xl`}
                   onClick={() => setSelect(1)}
                 >
                   <img
@@ -95,7 +95,7 @@ function ProductDetailsPage() {
                 <div
                   className={`${
                     select === 2 ? "border-2 border-slate-500" : "null"
-                  } cursor-pointer flex justify-center border-2 w-32 h-36 rounded-xl`}
+                  } cursor-pointer flex justify-center border-2 w-28 h-32 sm:w-32 sm:h-36 rounded-xl`}
                 >
                   <img
                     src={product?.images[2]?.url}
@@ -107,7 +107,7 @@ function ProductDetailsPage() {
                 <div
                   className={`${
                     select === 3 ? "border-2 border-slate-500" : "null"
-                  } cursor-pointer flex justify-center border-2 w-32 h-36 rounded-xl`}
+                  } cursor-pointer flex justify-center border-2  w-28 h-32 sm:w-32 sm:h-36 rounded-xl`}
                 >
                   <img
                     src={product?.images[3]?.url}
@@ -120,7 +120,7 @@ function ProductDetailsPage() {
               <img
                 src={product.images[select].url}
                 alt=""
-                className="w-[60%] h-[500px] rounded-lg"
+                className="w-[55%] sm:w-[60%] h-[500px] rounded-lg"
               />
             </div>
             <div className="mx-auto md:mx-0 pt-5 px-5 md:px-0 container w-full md:w-2/4">
@@ -183,8 +183,6 @@ function ProductDetailsPage() {
                     </h1>
                   </div>
                 </div>
-
-             
               </div>
             </div>
           </div>

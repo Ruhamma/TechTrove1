@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.1.4",
     "@reduxjs/toolkit": "^2.2.1",
     "@splidejs/react-splide": "^0.7.12",
+    "@stripe/stripe-js": "^3.0.10",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -19,6 +21,7 @@
     "react-router-dom": "^6.22.2",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.4",
+    "stripe": "^14.21.0",
     "tailwindcss": "^3.4.1",
     "toast": "^0.5.4",
     "web-vitals": "^2.1.4"

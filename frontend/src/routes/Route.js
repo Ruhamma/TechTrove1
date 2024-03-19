@@ -5,6 +5,8 @@ import ProfilePage from "../pages/ProfilePage.jsx";
 import CartPage from "../pages/CartPage.jsx";
 import ProductPage from "../pages/ProductPage.jsx";
 import ProductDetailsPage from "../pages/ProductDetailsPage.jsx";
+import CheckoutPage from "../pages/CheckoutPage.jsx";
+import OrderSuccessPage from "../pages/OrderSuccessPage.jsx";
 export {
   SignUpPage,
   LoginPage,
@@ -13,4 +15,6 @@ export {
   CartPage,
   ProductPage,
   ProductDetailsPage,
+  CheckoutPage,
+  OrderSuccessPage,
 };

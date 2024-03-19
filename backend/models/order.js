@@ -2,8 +2,13 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
   cart: {
-    type: Array,
-    required: true,
+    cart: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
+    quantities: [Number],
   },
   totalPrice: {
     type: Number,

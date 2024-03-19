@@ -14,10 +14,13 @@ app.use(express.json());
 app.use(cookieParser());
 
 const userRouter = require("./routes/userRoutes.js");
-const productRouter=require("./routes/productRoutes.js")
+const productRouter=require("./routes/productRoutes.js");
+const orderRouter = require("./routes/orderRoutes.js");
 
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
+app.use("/api/order", orderRouter);
+
 
 
 if (process.env.NODE_ENV !== "PRODUCTION") {
