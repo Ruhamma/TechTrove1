@@ -18,7 +18,7 @@ body {
   /* background: rgb(2,0,36), */
   background: linear-gradient(
     70deg,
-    rgb(3, 3, 18),
+    #030312,
     rgb(3, 3, 24),
     rgb(0, 2, 2)
   );
@@ -105,4 +105,10 @@ code {
   top: 0;
   left: 0;
   z-index: 999;
+}
+.img{
+  background-image: url("./assets/images/pngwing.co.png");
+  background-position: center;
+  background-size: cover;
+
 }

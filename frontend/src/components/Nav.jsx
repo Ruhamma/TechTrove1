@@ -18,6 +18,7 @@ import { addToCart } from "../redux/actions/cart";
 function Nav() {
   const { products } = useSelector((state) => state.products);
   const { wishlist } = useSelector((state) => state.wishlist);
+  const { cart } = useSelector((state) => state.cart);
   const { user, isAuthenticated } = useSelector((state) => state.user);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [click, setClick] = useState(false);
@@ -78,13 +79,13 @@ function Nav() {
     dispatch(addToCart(newData));
   };
   return (
-    <div className="flex items-center  justify-around py-3 relative">
+    <div className="flex items-center justify-around py-3 fixed top-0 w-full bg-[#030312] z-50 ">
       <div className="md:hidden w-[33.3%] pl-5">
         <RxHamburgerMenu size={30} onClick={toggleMenu} />
       </div>
       {menuOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50  z-20">
-          <div className="fixed top-0 left-0 h-full w-3/4 bg-slate-900 z-30 transition-all transform duration-300 ease-in-out">
+          <div className="fixed top-0 left-0 h-full w-3/4 bg-[#030312] z-30 transition-all transform duration-300 ease-in-out">
             <div className="flex absolute top-2 right-2">
               <button className=" focus:outline-none" onClick={toggleMenu}>
                 <IoMdClose className="text-3xl" />
@@ -104,7 +105,7 @@ function Nav() {
                 className="absolute top-2 bottom-0 right-2 cursor-pointer text-[20px] md:text-[25px] lg:text-[30px]"
               />
               {searchResult && searchResult.length !== 0 ? (
-                <div className="absolute rounded-lg w-full max-h-[50vh] overflow-y-scroll bg-white/55 shadow-sm-2 z-[9] p-4 flex flex-col gap-2  ">
+                <div className="absolute rounded-lg w-full max-h-[50vh] overflow-y-scroll bg-white/90 text-slate-900 shadow-sm-2 z-[9] p-4 flex flex-col gap-2  ">
                   {searchResult &&
                     searchResult.map((i, index) => {
                       return (
@@ -128,7 +129,7 @@ function Nav() {
                 </div>
               ) : null}
             </div>{" "}
-            <ul className="flex flex-col gap-9 p-4 mt-20 justify- h-full ">
+            <ul className="flex flex-col gap-9 p-4 mt-20  h-full ">
               {categories.map((category) => (
                 <li
                   key={category.name}
@@ -138,7 +139,7 @@ function Nav() {
                     // to={`/products?category=${category}`}
                     className="text-xl cursor-pointer"
                   >
-                    <p className="flex justify-between bg-slate-500/30 p-2 rounded-lg">
+                    <p className="flex justify-between bg-slate-500/70 p-2 rounded-lg">
                       {category}
                     </p>
                   </Link>
@@ -179,40 +180,40 @@ function Nav() {
               triggerClassName="collapsible-trigger"
               onClick={() => handleClick}
             >
-              <div className="collapsible-content flex flex-col p-2 gap-2 justify-evenly bg-slate-500/20 rounded-sm w-fit ">
+              <div className="collapsible-content flex flex-col p-2 gap-2 justify-evenly bg-slate-700 rounded-sm w-fit ">
                 <p
                   onClick={() => handleCategoryChange("Computers")}
-                  className="cursor-pointer bg-slate-600/30 px-2 rounded-lg"
+                  className="cursor-pointer bg-slate-400/30 px-2 rounded-lg"
                 >
                   Computers
                 </p>
                 <p
                   onClick={() => handleCategoryChange("Phones")}
-                  className="cursor-pointer bg-slate-600/30 px-2 rounded-lg"
+                  className="cursor-pointer bg-slate-400/30 px-2 rounded-lg"
                 >
                   Phones
                 </p>
                 <p
                   onClick={() => handleCategoryChange("Tablets")}
-                  className="cursor-pointer bg-slate-600/30 px-2 rounded-lg"
+                  className="cursor-pointer bg-slate-400/30 px-2 rounded-lg"
                 >
                   Tablets
                 </p>
                 <p
                   onClick={() => handleCategoryChange("Smart watches")}
-                  className="cursor-pointer bg-slate-600/30 px-2 rounded-lg"
+                  className="cursor-pointer bg-slate-400/30 px-2 rounded-lg"
                 >
                   Smart watches
                 </p>
                 <p
                   onClick={() => handleCategoryChange("Cameras")}
-                  className="cursor-pointer bg-slate-600/30 px-2 rounded-lg"
+                  className="cursor-pointer bg-slate-400/30 px-2 rounded-lg"
                 >
                   Cameras
                 </p>
                 <p
                   onClick={() => handleCategoryChange("Tv & audio")}
-                  className="cursor-pointer bg-slate-600/30 px-2 rounded-lg"
+                  className="cursor-pointer bg-slate-400/30 px-2 rounded-lg"
                 >
                   Tv & audio
                 </p>
@@ -230,23 +231,30 @@ function Nav() {
       </Link>
 
       <div className="flex gap-2 md:gap-10 w-[32%] justify-center items-center">
-        <Link to="/cart">
-          <IoBagOutline
-            color="white"
-            title="Add to cart"
-            className="cursor-pointer text-[20px] md:text-[25px] lg:text-[30px] "
-            size={30}
-          />
-        </Link>
-
         <div className="relative">
+          <Link to="/cart">
+            <IoBagOutline
+              color="white"
+              title="Add to cart"
+              className="cursor-pointer text-[20px] md:text-[25px] lg:text-[30px] "
+              size={30}
+            />
+          </Link>
+          <span className="absolute top-0 right-0 rounded-full w-3 h-3 border-slate-900 md:w-3 md:h-3 lg:w-4 lg:h-4 text-center bg-slate-700 text-white text-[9px] md:text-[9px] lg:text-[12px]">
+            {cart && cart.length}
+          </span>
+        </div>
+        <div className="relative hidden md:block">
           <AiOutlineHeart
             color="white"
             title="Add to cart"
-            className="cursor-pointer text-[20px] hidden md:block md:text-[25px] lg:text-[30px] "
+            className="cursor-pointer text-[20px]  md:text-[25px] lg:text-[30px] "
             size={30}
             onClick={() => setOpenWishlist(true)}
           />
+          <span className="absolute top-0 right-0 rounded-full w-3 h-3 border-slate-900 md:w-3 md:h-3 lg:w-4 lg:h-4 text-center bg-slate-700 text-white text-[9px] md:text-[9px] lg:text-[12px]">
+            {wishlist && wishlist.length}
+          </span>
         </div>
         {isAuthenticated ? (
           user?.avatar?.url ? (
@@ -304,7 +312,7 @@ function Nav() {
                             Computers
                           </p>
                           <p className="text-sm md:text-lg pb-2 hidden md:block">
-                            ETB {i.discountPrice}
+                            $ {i.discountPrice}
                           </p>
                         </div>
                       </div>

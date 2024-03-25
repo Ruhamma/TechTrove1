@@ -23,19 +23,20 @@ export const addOrder = (orderData) => {
         payload: response.product,
       });
       toast.success("Order created Successfully");
-
+      return { success: true };
     } catch (error) {
       dispatch({
         type: "OrderCreateFail",
-        payload: error.response.data.message,
+        payload: error.response.data.message || "Order failed",
       });
+      return { error: error.response.data.message || "Order failed" };
     }
   };
 };
 
-export const getUserOrder=(id)=>async(dispatch)=>{
+export const getUserOrder = (id) => async (dispatch) => {
   try {
-     dispatch({ type: "LoadOrderRequest" });
+    dispatch({ type: "LoadOrderRequest" });
     const { data } = await axios.get(`${server}/order/getUserOrder/${id}`);
     dispatch({ type: "LoadOrderSuccess", payload: data });
   } catch (error) {
@@ -44,4 +45,4 @@ export const getUserOrder=(id)=>async(dispatch)=>{
       payload: error.response.data.message,
     });
   }
-}
+};

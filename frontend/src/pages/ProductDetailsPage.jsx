@@ -11,6 +11,7 @@ import { HiOutlineMinus, HiPlus } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { addToCart } from "../redux/actions/cart";
 import { addToWishlist } from "../redux/actions/wishlist";
+import Footer from "../components/Footer";
 
 function ProductDetailsPage() {
   const { products } = useSelector((state) => state.products);
@@ -142,7 +143,7 @@ function ProductDetailsPage() {
                 <div className="">
                   <p className="font-bold text-2xl">
                     {" "}
-                    {product.discountPrice} ETB
+                    {product.discountPrice} $
                   </p>
                   <p className="font-bold text-xl line-through pr-2 pl-1 text-gray-500">
                     {" "}
@@ -205,6 +206,7 @@ function ProductDetailsPage() {
                 })}
             </div>
           </Splide>
+          <Footer />
         </div>
       ) : null}
     </div>

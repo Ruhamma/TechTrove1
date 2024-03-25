@@ -7,6 +7,7 @@ import ProductCard from "../components/ProductCard";
 import Collapsible from "react-collapsible";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { FaFilter } from "react-icons/fa";
+import Footer from "../components/Footer";
 
 function ProductPage() {
   const { products } = useSelector((state) => state.products);
@@ -253,6 +254,7 @@ function ProductPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

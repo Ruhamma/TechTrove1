@@ -9,6 +9,7 @@ import { HiPlus, HiOutlineMinus } from "react-icons/hi";
 import { toast } from "react-toastify";
 import ProductCard from "../components/ProductCard";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 function CartPage() {
   const { cart } = useSelector((state) => state.cart);
@@ -107,7 +108,7 @@ function CartPage() {
     <div>
       <Nav />
       <SearchBar />
-      <h1 className="text-3xl md:text-4xl text-center share-tech-regular p-2 m-2 pl-4 mt-10">
+      <h1 className="mt-20 text-3xl md:text-4xl text-center share-tech-regular p-2 m-2 pl-4 ">
         Shopping Cart
       </h1>
       <div className="flex flex-col md:flex-row mt-20">
@@ -140,10 +141,10 @@ function CartPage() {
                   </div>
                   <p className="text-sm md:text-lg pb-2 hidden md:block">
                     <span className="line-through pr-2 pl-1 text-gray-500">
-                      ETB {i.price}
+                      $ {i.price}
                     </span>
                     <br />
-                    ETB {i.discountPrice}
+                    $ {i.discountPrice}
                   </p>
                   <div className="flex flex-col items-center justify-evenly h-full ">
                     <div className="addMinus flex items-center gap-4">
@@ -187,13 +188,13 @@ function CartPage() {
                     <p>
                       {i.productName} x {quantity}
                     </p>
-                    <p>ETB {i.discountPrice * quantity}</p>
+                    <p>$ {i.discountPrice * quantity}</p>
                   </div>
                 );
               })}
             <div className="flex justify-between w-full text-2xl bg-slate-] py-4">
               <p className="">TotalPrice:</p>
-              <p>ETB {calculateTotalCartPrice()}</p>
+              <p>$ {calculateTotalCartPrice()}</p>
             </div>
 
             <button
@@ -223,6 +224,7 @@ function CartPage() {
             })}
         </div>
       </Splide>
+      <Footer/>
     </div>
   );
 }

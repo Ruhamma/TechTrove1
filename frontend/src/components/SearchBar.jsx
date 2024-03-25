@@ -35,7 +35,7 @@ function SearchBar() {
   return (
     <div
       ref={searchRef}
-      className="relative w-[90%] sm:w-[60%] mx-auto mt-10 z-10"
+      className="relative w-[90%] sm:w-[60%] mx-auto mt-32 z-10"
     >
       <input
         type="text"

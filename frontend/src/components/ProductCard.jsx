@@ -51,13 +51,13 @@ function ProductCard({ data }) {
         >
           <p>{data.productName}</p>
         </Link>
-        <p className="text-gray-600">{data.discountPrice} ETB</p>
+        <p className="text-gray-600">{data.discountPrice} $</p>
         <div className="flex items-center justify-between item-center ">
           <button onClick={handleCart}>
             <AiOutlineShoppingCart
               size={25}
               title="Add to cart"
-              className="  rounded-md"
+              className="cursor-pointer rounded-md"
             />
           </button>
           {click ? (
@@ -66,6 +66,7 @@ function ProductCard({ data }) {
               onClick={handleWishlistRemoval}
               title="remove from wishlist"
               color={click ? "red" : "#333"}
+              className="cursor-pointer"
             />
           ) : (
             <AiFillHeart
@@ -73,6 +74,7 @@ function ProductCard({ data }) {
               onClick={handleWishlistAddition}
               title="Add to wishlist"
               color={click ? "red" : "#333"}
+              className="cursor-pointer"
             />
           )}
         </div>

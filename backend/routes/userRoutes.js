@@ -5,6 +5,7 @@ const sendToken = require("../utils/jwtToken");
 const catchError = require("../middleware/catchError");
 const ErrorHandler = require("../utils/ErrorHandler");
 const { isAuthenticated } = require("../middleware/auth");
+const Comment=require("../models/comment")
 const cloudinary = require("cloudinary");
 //Sign Up
 userRouter.post("/signUp", async (req, res) => {
@@ -29,7 +30,6 @@ userRouter.post("/signUp", async (req, res) => {
     }
   }
 });
-
 //Login
 userRouter.post(
   "/login",
@@ -58,7 +58,6 @@ userRouter.post(
     }
   })
 );
-
 //Get User
 userRouter.get(
   "/getUser",
@@ -79,7 +78,6 @@ userRouter.get(
     }
   })
 );
-
 //Update Avatar
 userRouter.put(
   "/update-avatar",
@@ -164,7 +162,6 @@ userRouter.put(
     }
   })
 );
-
 //Delete Address
 userRouter.put(
   "/delete-address/:id",
@@ -185,9 +182,7 @@ userRouter.put(
     }
   })
 );
-
 //Update information(name,email,phoneNumber)
-
 userRouter.put(
   "/update-info",
   isAuthenticated,
@@ -213,7 +208,6 @@ userRouter.put(
     }
   })
 );
-
 //Change Password
 userRouter.put(
   "/change-password",
@@ -253,5 +247,25 @@ userRouter.get(
       return next(new ErrorHandler(error.message, 500));
     }
   })
+);
+
+userRouter.post("/addComment",async (req, res) => {
+  const { name, email, suggestion } = req.body;
+  
+    const comment = await Comment.create({
+      name,
+      email,
+      suggestion,
+    });
+    if (comment) {
+      res.status(201).json({
+        _id: comment._id,
+        name: comment.name,
+        email: comment.email,
+      });
+    } else {
+      res.status(400).json({ message: "Invalid User Data" });
+    }
+  }
 );
 module.exports = userRouter;

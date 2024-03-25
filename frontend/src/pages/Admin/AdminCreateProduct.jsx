@@ -127,7 +127,7 @@ function AdminCreateProduct() {
   return (
     <div>
       <h1>Create Product</h1>
-      <form onSubmit={handleSubmit} className="className=text-red-900">
+      <form onSubmit={handleSubmit} >
         <label htmlFor="">Name</label>
         <input
           className="text-red-900"

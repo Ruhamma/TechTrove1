@@ -10,6 +10,8 @@ import {
   ProductDetailsPage,
   CheckoutPage,
   OrderSuccessPage,
+  ContactUsPage,
+  AboutUsPage,
 } from "./routes/Route.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Store from "./redux/store.js";
@@ -38,6 +40,8 @@ function App() {
           <Route path="/product/:name" element={<ProductDetailsPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/order-success" element={<OrderSuccessPage />} />
+          <Route path="/contact" element={<ContactUsPage />} />
+          <Route path="/about" element={<AboutUsPage />} />
 
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>

@@ -10,6 +10,8 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import { FaPaypal, FaStripeS } from "react-icons/fa";
 import { IoCashSharp } from "react-icons/io5";
+import { toast } from "react-toastify";
+import Footer from "../components/Footer";
 
 const stripePromise = loadStripe(
   "pk_test_51Ov3Mg2MaqK23wHIrX4rdIWc5FtgjOzZoCtZVoNgA9h9ZB75BEXhSW9JhJ9mYTkxce8TkO5bHSFEiH0hk7bHwlUr00N5GWUIF2"
@@ -20,6 +22,10 @@ function CheckoutPage() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const { user, isAuthenticated } = useSelector((state) => state.user);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [initialTotalPrice, setInitialTotalPrice] = useState(0);
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
+
+  const [show, setShow] = useState(false);
   useEffect(() => {
     const calculateTotalPrice = () => {
       if (!cartData) return;
@@ -29,6 +35,12 @@ function CheckoutPage() {
         const item = cart[i];
         const quantity = quantities[i];
         totalPrice += item.discountPrice * quantity;
+      }
+      setInitialTotalPrice(totalPrice);
+      // Applying 10% discount
+      if (cart.length >= 5) {
+        totalPrice *= 0.9;
+        setShow(true);
       }
       setTotalPrice(totalPrice);
     };
@@ -43,22 +55,30 @@ function CheckoutPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handlePlaceOrder = () => {
-    const { cart, quantities } = cartData;
-    const orderData = {
-      cartData: {
-        cart,
-        quantities,
-      },
-      totalPrice,
-      userId: user._id,
-      address: selectedAddress,
-    };
-    dispatch(addOrder(orderData));
-    localStorage.removeItem("cartData");
-    localStorage.removeItem("cartItems");
-    navigate("/order-success");
-    window.location.reload();
+  const handlePlaceOrder = async () => {
+    try {
+      const { cart, quantities } = cartData;
+      const orderData = {
+        cartData: {
+          cart,
+          quantities,
+        },
+        totalPrice,
+        userId: user._id,
+        address: selectedAddress,
+      };
+      const response = await dispatch(addOrder(orderData));
+      if (!response.success) {
+        toast.error(response.error);
+        return;
+      }
+      localStorage.removeItem("cartData");
+      localStorage.removeItem("cartItems");
+      navigate("/order-success");
+      window.location.reload();
+    } catch (err) {
+      toast.error("Order not placed try again");
+    }
   };
   const handleGoToPayment = async () => {
     const stripe = await stripePromise;
@@ -124,17 +144,17 @@ function CheckoutPage() {
       (address) => address._id === addressId
     );
     setSelectedAddress(selectedAddress);
-    console.log(selectedAddress);
+    setIsAddressSelected(true);
   };
 
   return (
     <div className="checkout-page pattern">
+      {" "}
       <Nav />
       <SearchBar />
       <h1 className="text-3xl text-center p-2 m-10 share-tech-regular">
         Order Summary
       </h1>
-
       <div className=" w-[90%] md:w-2/3 mx-auto flex flex-col gap-10 bg-slate-400/30 p-2 sm:p-5 md:p-10 rounded-lg ">
         <table className="w-full divide-y-2 bg-slate-900/20 border-collapse rounded-md">
           <thead>
@@ -172,10 +192,10 @@ function CheckoutPage() {
         </table>
         <div>
           <div>
-            <h1 className="text-xl font-semibold text-center">
+            <h1 className="text-2xl text-white font-semibold text-center pb-4">
               Choose your Shipping Address
             </h1>
-            <div className="flex flex-col md:flex-row justify-center mt-5 text gap-2 md:gap-10">
+            <div className="flex flex-col md:flex-row flex-wrap justify-center mt-5 text gap-2 md:gap-10">
               {user &&
                 user.addresses.map((address) => (
                   <label
@@ -190,14 +210,14 @@ function CheckoutPage() {
                       }
                       onChange={() => handleAddressChange(address._id)}
                     />
-                    {address.country},{address.city},
-                    {address.address1}, {address.address2}
+                    {address.country},{address.city},{address.address1},{" "}
+                    {address.address2}
                   </label>
                 ))}
             </div>
           </div>
           <div>
-            <h1 className="text-xl font-semibold text-center mt-5 ">
+            <h1 className="text-2xl font-semibold text-center my-5 py-4">
               Payment Method
             </h1>
             <div className="flex flex-col md:flex-row justify-center mt-5 text gap-2 md:gap-10">
@@ -246,7 +266,12 @@ function CheckoutPage() {
             </div>
           </div>
         </div>
-
+        {show ? (
+          <h2 className="text-center text-lg text-slate-200/30 font-bold mb-2">
+            Thank you for purchasing more than 10 products a 10% discount is
+            applied
+          </h2>
+        ) : null}
         <h2 className="text-center text-2xl font-bold mb-4">
           Total Price: ${totalPrice.toFixed(2)}
         </h2>
@@ -286,6 +311,7 @@ function CheckoutPage() {
           </button>
         )}
       </div>
+      <Footer/>
     </div>
   );
 }

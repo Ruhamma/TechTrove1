@@ -7,6 +7,8 @@ import ProductPage from "../pages/ProductPage.jsx";
 import ProductDetailsPage from "../pages/ProductDetailsPage.jsx";
 import CheckoutPage from "../pages/CheckoutPage.jsx";
 import OrderSuccessPage from "../pages/OrderSuccessPage.jsx";
+import ContactUsPage from "../pages/ContactUsPage.jsx";
+import AboutUsPage from "../pages/AboutUsPage.jsx";
 export {
   SignUpPage,
   LoginPage,
@@ -17,4 +19,6 @@ export {
   ProductDetailsPage,
   CheckoutPage,
   OrderSuccessPage,
+  ContactUsPage,
+  AboutUsPage,
 };
