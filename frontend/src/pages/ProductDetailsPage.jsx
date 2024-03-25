@@ -189,7 +189,7 @@ function ProductDetailsPage() {
           </div>
 
           {/* Suggestions */}
-          <p className="p-10 share-tech-regular text-xl sm:text-2xl ">
+          <p className="p-10 share-tech-regular text-xl sm:text-2xl mt-20">
             You May Also Like
           </p>
           <Splide options={splideOptions}>
@@ -206,6 +206,14 @@ function ProductDetailsPage() {
                 })}
             </div>
           </Splide>
+          <div>
+            <p className="text-center mt-20 text-3xl font-bold">No Reviews yet</p>
+            <img
+              src="/images/online-review-animate (1).svg"
+              alt=""
+              className="md:w-1/2 mx-auto"
+            />
+          </div>
           <Footer />
         </div>
       ) : null}
