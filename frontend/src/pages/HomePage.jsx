@@ -5,7 +5,8 @@ import ProductCard from "../components/ProductCard.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { removeFromCart } from "../redux/actions/cart.js";
 import { AiOutlineSearch } from "react-icons/ai";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
+import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 import Footer from "../components/Footer.jsx";
 function HomePage() {
   const { products } = useSelector((state) => state.products);
@@ -44,46 +45,24 @@ function HomePage() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-  const splideOptions = {
-    type: "loop",
-    perPage: 1,
-    gap: "1rem",
-    autoplay: true,
-    interval: 3000,
-    pauseOnHover: false,
-    arrows: false,
-    easing: "linear",
-    breakpoints: {
-      1245: {
-        perPage: 3,
-      },
-      768: {
-        perPage: 2,
-      },
-      576: {
-        perPage: 2,
-      },
-    },
-  };
+   const splideOptions1 = {
+     type: "loop",
+     perPage: 4,
+     perMove: 1,
+     breakpoints: {
+       1245: {
+         perPage: 3,
+       },
+       768: {
+         perPage: 2,
+       },
+       576: {
+         perPage: 2,
+       },
+     },
+   };
 
-  const splideOptions1 = {
-    type: "loop",
-    perPage: 1,
-    perMove: 1,
-    autoplay: true,
-    interval: 3000,
-    breakpoints: {
-      1245: {
-        perPage: 3,
-      },
-      768: {
-        perPage: 2,
-      },
-      576: {
-        perPage: 2,
-      },
-    },
-  };
+
   return (
     <div className="h-[100vh] pattern">
       <Nav />
@@ -300,18 +279,22 @@ function HomePage() {
             See All
           </p>
         </div>
-        <Splide options={splideOptions}>
-          <div className="flex overflow-hidden gap-10 px-10">
+        <Splide hasTrack={false} aria-label="..." options={splideOptions1}>
+          <SplideTrack>
             {products &&
               products.map((product, index) => {
                 return (
-                  <div className="">
-                    <SplideSlide>
-                      <ProductCard data={product} key={index} />
-                    </SplideSlide>
-                  </div>
+                  <SplideSlide key={index}>
+                    <div className="flex items-center justify-center">
+                      <ProductCard data={product} />
+                    </div>
+                  </SplideSlide>
                 );
               })}
+          </SplideTrack>
+
+          <div className="splide__progress mt-10">
+            <div className="splide__progress__bar" />
           </div>
         </Splide>
       </div>

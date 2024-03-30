@@ -14,9 +14,7 @@ function Footer() {
         </div>
         <div className="flex flex-col gap-2 md:items-start items-center">
           <p className="text-lg ">Navigation</p>
-          <Link to="/about" className="text-sm text-gray-500">
-            About us
-          </Link>
+          <Link className="text-sm text-gray-500">About us</Link>
           <Link to="/contact" className="text-sm text-gray-500">
             Contact us
           </Link>

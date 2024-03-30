@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import Collapsible from "react-collapsible";
-import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { FaFilter } from "react-icons/fa";
 import Footer from "../components/Footer";
 
@@ -90,9 +89,43 @@ function ProductPage() {
     <div>
       <Nav />
       <SearchBar />
-      <div className="w-[90%] h-[30vh] bg-slate-400 mx-auto rounded-lg p-10 mt-5">
-        <p className="text-3xl"> Welcome to the world of {categoryName}</p>
+      <div className="w-[90%] h-[30vh] bg-slate-400 mx-auto rounded-lg p-10 mt-5 relative shadow-sm shadow-white/50">
+        <p className="text-3xl z-30 absolute">
+          {" "}
+          Welcome to the world of <br /> {categoryName}
+        </p>
         {/* here add images by checking the category and displaying relevant ones */}
+        {categoryName === "computers" ? (
+          <img
+            src="/images/computers.jpg"
+            alt="computers"
+            className="w-full h-full absolute top-0 right-0 bg-red-800/20 z-20 object-center object-cover"
+          />
+        ) : categoryName === "phones" ? (
+          <img
+            src="/images/phones.jpg"
+            alt="phones"
+            className="w-full h-full absolute top-0 right-0 bg-red-800/20 z-20 object-top object-cover"
+          />
+        ) : categoryName === "tablets" ? (
+          <img
+            src="/images/tablets.jpg"
+            alt="tablets"
+            className="w-full h-full absolute top-0 right-0 bg-red-800/20 z-20 object-center object-cover"
+          />
+        ) : categoryName === "cameras" ? (
+          <img
+            src="/images/cameras.jpg"
+            alt="cameras"
+            className="w-full h-full absolute top-0 right-0 bg-red-800/20 z-20 object-center object-cover"
+          />
+        ) : categoryName === "tv" ? (
+          <img
+            src="/images/tv.jpg"
+            alt="tv"
+            className="w-full h-full absolute top-0 right-0 bg-red-800/20 z-20 object-center object-cover"
+          />
+        ) : null}
       </div>
 
       <div className="flex flex-col md:flex-row gap-5 p-2  ">

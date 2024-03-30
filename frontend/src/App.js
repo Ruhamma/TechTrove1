@@ -11,7 +11,6 @@ import {
   CheckoutPage,
   OrderSuccessPage,
   ContactUsPage,
-  AboutUsPage,
 } from "./routes/Route.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Store from "./redux/store.js";
@@ -41,9 +40,20 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/order-success" element={<OrderSuccessPage />} />
           <Route path="/contact" element={<ContactUsPage />} />
-          <Route path="/about" element={<AboutUsPage />} />
 
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route
+            path="*"
+            element={
+              <div>
+                {" "}
+                <img
+                  src="/images/404.svg"
+                  alt="Page not found"
+                  className="w-[60%] h-[100vh] mx-auto"
+                />{" "}
+              </div>
+            }
+          />
         </Routes>
         <ToastContainer
           position="top-center"

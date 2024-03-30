@@ -3,7 +3,7 @@ import SearchBar from "../components/SearchBar";
 import Nav from "../components/Nav";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import ProductCard from "../components/ProductCard";
 import { AiOutlineMessage } from "react-icons/ai";
 import Collapsible from "react-collapsible";
@@ -43,22 +43,22 @@ function ProductDetailsPage() {
   const addToWishlistHandler = (data) => {
     dispatch(addToWishlist(data));
   };
-  const splideOptions = {
-    type: "loop",
-    perPage: 4,
-    perMove: 1,
-    autoplay: true,
-    arrows: false,
-    interval: 3000,
-    breakpoints: {
-      768: {
-        perPage: 2,
-      },
-      576: {
-        perPage: 1,
-      },
-    },
-  };
+   const splideOptions1 = {
+     type: "loop",
+     perPage: 4,
+     perMove: 1,
+     breakpoints: {
+       1245: {
+         perPage: 3,
+       },
+       768: {
+         perPage: 2,
+       },
+       576: {
+         perPage: 2,
+       },
+     },
+   };
   return (
     <div>
       <Nav />
@@ -192,22 +192,28 @@ function ProductDetailsPage() {
           <p className="p-10 share-tech-regular text-xl sm:text-2xl mt-20">
             You May Also Like
           </p>
-          <Splide options={splideOptions}>
-            <div className="flex overflow-hidden gap-10 px-10">
+          <Splide hasTrack={false} aria-label="..." options={splideOptions1}>
+            <SplideTrack>
               {products &&
                 products.map((product, index) => {
                   return (
-                    <div className="">
-                      <SplideSlide>
-                        <ProductCard data={product} key={index} />
-                      </SplideSlide>
-                    </div>
+                    <SplideSlide key={index}>
+                      <div className="flex items-center justify-center">
+                        <ProductCard data={product} />
+                      </div>
+                    </SplideSlide>
                   );
                 })}
+            </SplideTrack>
+
+            <div className="splide__progress mt-10">
+              <div className="splide__progress__bar" />
             </div>
           </Splide>
           <div>
-            <p className="text-center mt-20 text-3xl font-bold">No Reviews yet</p>
+            <p className="text-center mt-20 text-3xl font-bold">
+              No Reviews yet
+            </p>
             <img
               src="/images/online-review-animate (1).svg"
               alt=""

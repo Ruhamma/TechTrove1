@@ -57,6 +57,7 @@ function CheckoutPage() {
   const navigate = useNavigate();
   const handlePlaceOrder = async () => {
     try {
+      console.log("Placing order");
       const { cart, quantities } = cartData;
       const orderData = {
         cartData: {
@@ -81,33 +82,45 @@ function CheckoutPage() {
     }
   };
   const handleGoToPayment = async () => {
-    const stripe = await stripePromise;
+   try {
+     const stripe = await stripePromise;
 
-    // Create a Checkout Session on the backend
-    const response = await fetch(`${server}/order/create-checkout-session`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        cartData: {
-          cart,
-          quantities,
-        },
-        totalPrice: totalPrice,
-        userId: user._id,
-        address: selectedAddress,
-        currency: "$", // Or your preferred currency
-      }),
-    });
+     // Create a Checkout Session on the backend
+     const response = await fetch(`${server}/order/create-checkout-session`, {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({
+         cartData: {
+           cart,
+           quantities,
+         },
+         totalPrice: totalPrice,
+         userId: user._id,
+         address: selectedAddress,
+         currency: "$", // Or your preferred currency
+       }),
+     });
 
-    const sessionData = await response.json();
+     if (!response.ok) {
+       throw new Error("Failed to create checkout session");
+     }
 
-    // Redirect to Stripe Checkout with the session ID
-    const result = await stripe.redirectToCheckout({
-      sessionId: sessionData.sessionId,
-    });
+     const sessionData = await response.json();
 
-    handlePlaceOrder();
-    // Payment successful, handle success scenario
+     // Redirect to Stripe Checkout with the session ID
+     const result = await stripe.redirectToCheckout({
+       sessionId: sessionData.sessionId,
+      });
+      console.log(result);
+      
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
+     
+      // Payment successful, now place the order
+   } catch (err) {
+     toast.error("Payment failed: " + err.message);
+   }
   };
 
   const handlePaypalPayment = async () => {
@@ -128,6 +141,7 @@ function CheckoutPage() {
 
       const orderData = await response.json();
 
+      
       return orderData.orderId;
     } catch (error) {
       console.error("Error creating PayPal order:", error);

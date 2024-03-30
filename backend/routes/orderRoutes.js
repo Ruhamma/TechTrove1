@@ -23,7 +23,7 @@ orderRouter.post(
   catchError(async (req, res, next) => {
     try {
       const { cartData, totalPrice, userId, address } = req.body;
-      console.log(cartData)
+      console.log(cartData);
       const order = new Order({
         cart: cartData,
         totalPrice,
@@ -50,13 +50,12 @@ orderRouter.post("/create-checkout-session", async (req, res) => {
 
   const lineItems = cartData.cart.map((item, index) => ({
     price_data: {
-      currency: "USD", // Replace with your desired currency
+      currency: "USD",
       product_data: {
         name: item.productName,
-        images: [item.images[0].url], // Replace with your product image
-        // Add other product details as needed
+        images: [item.images[0].url],
       },
-      unit_amount: item.discountPrice * 100, // Stripe requires the price in cents
+      unit_amount: item.discountPrice * 100,
     },
     quantity: cartData.quantities[index],
   }));
@@ -65,15 +64,16 @@ orderRouter.post("/create-checkout-session", async (req, res) => {
     line_items: lineItems,
     mode: "payment",
     success_url: `${YOUR_DOMAIN}/order-success`,
-    cancel_url: `${YOUR_DOMAIN}/order-failed`,
+    cancel_url: `${YOUR_DOMAIN}/cart`,
   });
 
-  // Send published serialized session object to client for checkout
   res.json({ sessionId: session.id });
 });
 
 orderRouter.post("/create-paypal-order", async (req, res) => {
   try {
+    const { cartData, totalPrice, userId, address } = req.body;
+
     const request = new paypal.orders.OrdersCreateRequest();
     request.prefer("return=representation");
     request.requestBody({
@@ -87,9 +87,15 @@ orderRouter.post("/create-paypal-order", async (req, res) => {
         },
       ],
     });
-
     const response = await client.execute(request);
     const order = response.result;
+    const order1 = new Order({
+      cart: cartData,
+      totalPrice,
+      userId,
+      address,
+    });
+    await order1.save();
     res.status(200).json({ orderId: order.id });
   } catch (error) {
     console.error("Error creating PayPal order:", error);
@@ -97,16 +103,18 @@ orderRouter.post("/create-paypal-order", async (req, res) => {
   }
 });
 
-orderRouter.get("/getUserOrder/:id",
+orderRouter.get(
+  "/getUserOrder/:id",
   catchError(async (req, res, next) => {
-  try {
-    const order = await Order.find({ userId: req.params.id }).populate(
-      "cart.cart"
-    );
-   
-     res.json(order);
-  } catch (error) {
-     res.status(500).json({ message: "Failed to fetch user orders" });
-  }
-}))
+    try {
+      const order = await Order.find({ userId: req.params.id }).populate(
+        "cart.cart"
+      );
+
+      res.json(order);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch user orders" });
+    }
+  })
+);
 module.exports = orderRouter;

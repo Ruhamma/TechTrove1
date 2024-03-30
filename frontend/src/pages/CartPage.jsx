@@ -4,7 +4,7 @@ import { removeFromCart } from "../redux/actions/cart";
 import Nav from "../components/Nav";
 import SearchBar from "../components/SearchBar";
 import { Link } from "react-router-dom";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import { HiPlus, HiOutlineMinus } from "react-icons/hi";
 import { toast } from "react-toastify";
 import ProductCard from "../components/ProductCard";
@@ -83,15 +83,10 @@ function CartPage() {
     navigate("/checkout");
   };
 
-  const splideOptions = {
+  const splideOptions1 = {
     type: "loop",
-    perPage: 1,
-    gap: "1rem",
-    autoplay: true,
-    interval: 3000,
-    pauseOnHover: false,
-    arrows: false,
-    easing: "linear",
+    perPage: 4,
+    perMove: 1,
     breakpoints: {
       1245: {
         perPage: 3,
@@ -143,8 +138,7 @@ function CartPage() {
                     <span className="line-through pr-2 pl-1 text-gray-500">
                       $ {i.price}
                     </span>
-                    <br />
-                    $ {i.discountPrice}
+                    <br />$ {i.discountPrice}
                   </p>
                   <div className="flex flex-col items-center justify-evenly h-full ">
                     <div className="addMinus flex items-center gap-4">
@@ -210,21 +204,26 @@ function CartPage() {
       <p className="share-tech-regular text-2xl sm:text-3xl p-4 pt-16 pl-10">
         Products you might like
       </p>
-      <Splide options={splideOptions}>
-        <div className="flex overflow-hidden gap-10 px-10">
+
+      <Splide hasTrack={false} aria-label="..." options={splideOptions1}>
+        <SplideTrack>
           {suggestedProducts &&
             suggestedProducts.map((product, index) => {
               return (
-                <div className="">
-                  <SplideSlide>
-                    <ProductCard data={product} key={index} />
-                  </SplideSlide>
-                </div>
+                <SplideSlide key={index}>
+                  <div className="flex items-center justify-center">
+                    <ProductCard data={product} />
+                  </div>
+                </SplideSlide>
               );
             })}
+        </SplideTrack>
+
+        <div className="splide__progress mt-10">
+          <div className="splide__progress__bar" />
         </div>
       </Splide>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
