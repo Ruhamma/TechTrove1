@@ -21,6 +21,7 @@ function AdminCreateProduct() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState();
   const [discountPrice, setDiscountPrice] = useState();
+  const [category, setCategory] = useState("computers");
   const [products, setProducts] = useState([]);
   const [images, setImages] = useState([]);
   const [editProduct, setEditProduct] = useState(null);
@@ -59,12 +60,14 @@ function AdminCreateProduct() {
     });
     newForm.append("productName", productName);
     newForm.append("description", description);
+    newForm.append("category", category);
     newForm.append("price", price);
     newForm.append("discountPrice", discountPrice);
     dispatch(
       addProduct({
         productName,
         description,
+        category,
         price,
         discountPrice,
         images,
@@ -127,7 +130,7 @@ function AdminCreateProduct() {
   return (
     <div>
       <h1>Create Product</h1>
-      <form onSubmit={handleSubmit} >
+      <form onSubmit={handleSubmit}>
         <label htmlFor="">Name</label>
         <input
           className="text-red-900"
@@ -148,6 +151,20 @@ function AdminCreateProduct() {
           placeholder="description..."
           required
         />
+        <label>Category</label>
+        <select
+          className="text-red-900"
+          name="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="computers">Computers</option>
+          <option value="phones">Phones</option>
+          <option value="tablets">Tablets</option>
+          <option value="cameras">Cameras</option>
+          <option value="smart watch">Smart Watches</option>
+          <option value="Tv">Tv & audio</option>
+        </select>
         <label>Original Price</label>
         <input
           className="text-red-900"
@@ -178,6 +195,8 @@ function AdminCreateProduct() {
         {images && images.map((i) => <img src={i} key={i} alt="" />)}
         <input type="submit" value="Create" />
       </form>
+      <br />
+      <br />
       All products
       {products &&
         products.map((product, index) => {
@@ -213,7 +232,8 @@ function AdminCreateProduct() {
                   }
                 />
               ) : (
-                <p>{product.description}</p>
+                <p>{product.description}+{product.category}</p>
+                
               )}
               <p>price</p>
               {editProduct === product ? (

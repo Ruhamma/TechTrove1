@@ -157,7 +157,7 @@ function ProfilePage() {
       {user ? (
         <div>
           <Nav />
-          <div className="m-10 bg-slate-800/50 p-5 rounded-md flex flex-col md:flex-row min-h-[80vh] md:w-[85%] lg:w-[80%] mx-auto">
+          <div className="m-20 bg-slate-800/50 p-5 rounded-md flex flex-col md:flex-row min-h-[80vh] md:w-[85%] lg:w-[80%] mx-auto">
             {/* Profile side bar */}
             <div className="bg-slate-700 w-full md:w-[20%] rounded-lg">
               <div className=" rounded-lg flex flex-col items-center justify-center pt-5 ">

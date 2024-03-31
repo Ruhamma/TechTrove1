@@ -13,6 +13,13 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({
+    path: "./.env",
+  });
+}
+
 const userRouter = require("./routes/userRoutes.js");
 const productRouter=require("./routes/productRoutes.js");
 const orderRouter = require("./routes/orderRoutes.js");

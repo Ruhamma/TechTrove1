@@ -20,7 +20,7 @@ function ProductPage() {
   const searchParams = new URLSearchParams(location.search);
   const categoryData = searchParams.get("category");
   const categoryName = categoryData.toLowerCase();
-
+ console.log(categoryName)
   useEffect(() => {
     const filteredData =
       products &&

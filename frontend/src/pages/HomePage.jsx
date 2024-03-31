@@ -45,28 +45,27 @@ function HomePage() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-   const splideOptions1 = {
-     type: "loop",
-     perPage: 4,
-     perMove: 1,
-     breakpoints: {
-       1245: {
-         perPage: 3,
-       },
-       768: {
-         perPage: 2,
-       },
-       576: {
-         perPage: 2,
-       },
-     },
-   };
-
+  const splideOptions1 = {
+    type: "loop",
+    perPage: 4,
+    perMove: 1,
+    breakpoints: {
+      1245: {
+        perPage: 3,
+      },
+      768: {
+        perPage: 2,
+      },
+      576: {
+        perPage: 2,
+      },
+    },
+  };
 
   return (
     <div className="h-[100vh] pattern">
       <Nav />
-      <div className="w-full text-center h-[80vh]  flex-col flex gap-4 justify-center items-center">
+      <div className="w-full text-center h-[80vh]  flex-col flex gap-4 justify-center items-center mt-20">
         <p className="tex-lg sm:text-xl md:text-2xl">
           Tech Made Easy. Shop Now.
         </p>
@@ -74,7 +73,7 @@ function HomePage() {
           Your Destination for Cutting-Edge
           <span className="text-blue-900 ml-2">Electronics</span>.
         </p>
-        <p className="text-lg sm:text-xl px-2">
+        <p className="text-lg sm:text-xl px-2 text-gray-500">
           Shop the latest and greatest electronics. Find everything you need to
           stay ahead of the curve
         </p>
@@ -262,8 +261,8 @@ function HomePage() {
         <div className=" flex flex-col justify-center gap-5">
           <p className="font-bold text-lg md:text-3xl share-tech-regular text-center md:text-left">
             Your Mobile. <br className="hidden md:block" />
-            Your Mobile. <br className="hidden md:block" />
-            Your Way. Explore Endless Possibilities.
+            Your Way. <br className="hidden md:block" />
+            Explore Endless Possibilities.
           </p>
         </div>
       </div>

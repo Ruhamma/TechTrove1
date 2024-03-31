@@ -2,18 +2,14 @@ const express = require("express");
 const catchError = require("../middleware/catchError");
 const ErrorHandler = require("../utils/ErrorHandler");
 const Order = require("../models/order");
-const Stripe = require("stripe")(
-  "sk_test_51Ov3Mg2MaqK23wHIS2eTJiyHPSxxeWyXBY9UfgnY0Kt1lNd8svdHBwpkAeMMU8DYx5ESR0Bv3v13lh7B4YaRVfEp00UE40KgEb"
-);
+const Stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const paypal = require("@paypal/checkout-server-sdk");
 
 //PayPal Payments SDK client ID and secret
+console.log(process.env.PAYPAL_CLIENT_ID);
 let clientId = process.env.PAYPAL_CLIENT_ID;
 let clientSecret = process.env.PAYPAL_SECRET;
-const environment = new paypal.core.SandboxEnvironment(
-  "AaKr2aN-CZLfLue_0LUIeYPckKmTCxu2JBZypcacxlF1dS3On9SPAOWDXdiR3sgWs7ktfZLvm3eCMbU6",
-  "EJ_6TMNTNhgQ0YW7CTpu04dkptAHpi82y3qU9OiWqYMsr2Dzb94pyN5AEH8zJ16wX8nCZgCSHrNyl4o1"
-);
+const environment = new paypal.core.SandboxEnvironment(clientId, clientSecret);
 const client = new paypal.core.PayPalHttpClient(environment);
 
 const orderRouter = express.Router();
