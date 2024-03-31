@@ -5,7 +5,7 @@ const cookieParser=require("cookie-parser");
 const bodyParser=require("body-parser")
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://tech-trove1-wu6u.vercel.app",
     credentials: true,
   })
 );
