@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { loadUser } from "./redux/actions/user.js";
 import { getAllProducts } from "./redux/actions/product.js";
 import AdminCreateProduct from "./pages/Admin/AdminCreateProduct.jsx";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "sonner";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
   useEffect(() => {
@@ -55,18 +55,7 @@ function App() {
             }
           />
         </Routes>
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
+        <Toaster  richColors/>
       </BrowserRouter>
     </Provider>
   );

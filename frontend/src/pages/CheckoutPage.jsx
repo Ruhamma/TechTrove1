@@ -10,7 +10,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import { FaPaypal, FaStripeS } from "react-icons/fa";
 import { IoCashSharp } from "react-icons/io5";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import Footer from "../components/Footer";
 
 const stripePromise = loadStripe(

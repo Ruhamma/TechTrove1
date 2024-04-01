@@ -241,7 +241,7 @@ function HomePage() {
       </div>
       {/* {product list } */}
       <div className="my-20 pb-20">
-        <p className="text-3xl share-tech-regular pl-10 pb-10  pt-[8rem] text-slate-500 text-center">
+        <p className="text-3xl share-tech-regular  pb-10  pt-[8rem] text-slate-500 text-center">
           Explore Latest Products
         </p>
         <div className="cards w-[90%] mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-0 lg:px-16 md:gap-0 p-10 place-items-center sm:gap-x-10 gap-20 mt-10 pattern ">

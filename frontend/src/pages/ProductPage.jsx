@@ -20,7 +20,7 @@ function ProductPage() {
   const searchParams = new URLSearchParams(location.search);
   const categoryData = searchParams.get("category");
   const categoryName = categoryData.toLowerCase();
- console.log(categoryName)
+  console.log(categoryName);
   useEffect(() => {
     const filteredData =
       products &&
@@ -81,6 +81,7 @@ function ProductPage() {
     setData(filteredData);
   };
 
+  console.log(data.length, "data");
   if (isLoading) {
     return <p>Loading ......</p>;
   }
@@ -276,16 +277,27 @@ function ProductPage() {
             </div>
           </Collapsible>
         </div>
-        <div className=" w-full">
-          <div className="cards grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  p-10 place-items-center sm:gap-x-10 gap-20 md:mt-10 ">
-            {data &&
-              data.map((product, index) => (
-                <div key={index} className="">
-                  <ProductCard data={product} />
-                </div>
-              ))}
+        {data.length === 0 ? (
+          <div className=" w-full flex flex-col items-center">
+            <p className="text-4xl share-tech-regular mx-auto font-bold w-fit mt-10">No Item Yet</p>
+            <img
+              src="/images/NoItem.svg"
+              alt="empty"
+              className="w-1/2 mx-auto"
+            />
           </div>
-        </div>
+        ) : (
+          <div className=" w-full">
+            <div className="cards grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  p-10 place-items-center sm:gap-x-10 gap-20 md:mt-10 ">
+              {data &&
+                data.map((product, index) => (
+                  <div key={index} className="">
+                    <ProductCard data={product} />
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
       </div>
       <Footer />
     </div>

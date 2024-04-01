@@ -133,7 +133,7 @@ function Nav() {
               {categories.map((category) => (
                 <li
                   key={category.name}
-                  onClick={() => selectedCategory(category)}
+                  onClick={() => handleCategoryChange(category)}
                 >
                   <Link
                     // to={`/products?category=${category}`}
@@ -309,7 +309,7 @@ function Nav() {
                             </p>
                           </Link>
                           <p className="text-sm md:text-base text-gray-500 pb-2">
-                            Computers
+                            {i.category}
                           </p>
                           <p className="text-sm md:text-lg pb-2 hidden md:block">
                             $ {i.discountPrice}

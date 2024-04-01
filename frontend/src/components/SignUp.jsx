@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { server } from "../server";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 function SignUp() {
   const navigate = useNavigate();
   const [name, setName] = useState("");

@@ -7,7 +7,10 @@ function Footer() {
     <div>
       <div className="flex md:gap-0 gap-10  md:flex-row flex-col md:justify-around items-center  bg-[#030312] text-white p-10 mt-10">
         <div className="flex flex-col gap-2 md:items-start items-center">
-          <p className="text-3xl font-bold share-tech-regular">Tech Trove</p>
+          <div className="flex gap-2">
+            <img src="/images/logo.png" alt="logo" className="w-10 h-10" />
+            <p className="text-3xl font-bold share-tech-regular">Tech Trove</p>
+          </div>
           <p className="text-sm text-gray-500 text-center md:text-left">
             123, Main Street, New York, <br /> NY 10030
           </p>

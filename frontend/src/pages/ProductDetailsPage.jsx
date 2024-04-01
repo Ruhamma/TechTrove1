@@ -8,7 +8,7 @@ import ProductCard from "../components/ProductCard";
 import { AiOutlineMessage } from "react-icons/ai";
 import Collapsible from "react-collapsible";
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { addToCart } from "../redux/actions/cart";
 import { addToWishlist } from "../redux/actions/wishlist";
 import Footer from "../components/Footer";
@@ -37,28 +37,28 @@ function ProductDetailsPage() {
   }, [products, product]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const addToCartHandler = (id) => {
-    dispatch(addToCart(id));
+  const addToCartHandler = (data) => {
+    dispatch(addToCart(data));
   };
   const addToWishlistHandler = (data) => {
     dispatch(addToWishlist(data));
   };
-   const splideOptions1 = {
-     type: "loop",
-     perPage: 4,
-     perMove: 1,
-     breakpoints: {
-       1245: {
-         perPage: 3,
-       },
-       768: {
-         perPage: 2,
-       },
-       576: {
-         perPage: 2,
-       },
-     },
-   };
+  const splideOptions1 = {
+    type: "loop",
+    perPage: 4,
+    perMove: 1,
+    breakpoints: {
+      1245: {
+        perPage: 3,
+      },
+      768: {
+        perPage: 2,
+      },
+      576: {
+        perPage: 2,
+      },
+    },
+  };
   return (
     <div>
       <Nav />
@@ -159,7 +159,7 @@ function ProductDetailsPage() {
                   <div
                     className={`cursor-pointer bg-slate-500/20 w-full rounded-2xl px-10 py-2`}
                     onClick={() => {
-                      addToCartHandler(product._id);
+                      addToCartHandler(product);
                     }}
                   >
                     <h1 className="text-white text-xl text-center font-[600]">
@@ -169,7 +169,7 @@ function ProductDetailsPage() {
                   <div
                     className={`cursor-pointer bg-slate-500/40 w-full rounded-2xl px-10 py-2`}
                     onClick={() => {
-                      addToWishlistHandler(product._id);
+                      addToWishlistHandler(product);
                     }}
                   >
                     <h1 className="text-white text-xl text-center font-[600]">
@@ -178,6 +178,10 @@ function ProductDetailsPage() {
                   </div>
                   <div
                     className={`cursor-pointer bg-slate-500 w-full rounded-2xl px-10 py-2`}
+                    onClick={() => {
+                      addToCartHandler(product);
+                      navigate("/cart");
+                    }}
                   >
                     <h1 className="text-white text-xl text-center font-[600]">
                       Buy

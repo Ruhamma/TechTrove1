@@ -2,13 +2,11 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { server } from "../server";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import {
   addAddress,
   deleteUserAddress,
   editExistingAddress,
-  logout,
-  updateAddress,
   updateInfo,
   updatePassword,
   updateUserImage,
@@ -17,7 +15,7 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import Avatar from "react-avatar";
-import { IoPerson, IoPersonSharp } from "react-icons/io5";
+import {  IoPersonSharp } from "react-icons/io5";
 import { MdEmail, MdOutlinePerson } from "react-icons/md";
 import { FaAddressBook, FaRegAddressBook } from "react-icons/fa6";
 import { TbPasswordUser } from "react-icons/tb";

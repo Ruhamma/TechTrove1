@@ -1,6 +1,6 @@
 import axios from "axios";
 import { server } from "../../server";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 export const addOrder = (orderData) => {
   return async (dispatch) => {

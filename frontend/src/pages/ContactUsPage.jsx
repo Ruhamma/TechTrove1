@@ -4,7 +4,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaPhone } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { server } from "../server";
 import Footer from "../components/Footer";
 function ContactUsPage() {

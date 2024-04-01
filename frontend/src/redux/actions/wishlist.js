@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 export const addToWishlist = (data) => async (dispatch, getState) => {
   const item = getState().cart.cart.find((i) => i._id === data._id);
