@@ -259,7 +259,7 @@ function ProfilePage() {
                           size={40}
                           className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
                         />
-                        <div className="w-[40%]">
+                        <div className="w-[70%] sm:w-[40%]">
                           <p className="text-gray-500">Name</p>
                           <input
                             type="text"
@@ -276,7 +276,7 @@ function ProfilePage() {
                           size={40}
                           className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
                         />
-                        <div className="w-[40%]">
+                        <div className="w-[70%] sm:w-[40%]">
                           <p className="text-gray-500">Email</p>
                           <input
                             type="text"
@@ -293,7 +293,7 @@ function ProfilePage() {
                           size={40}
                           className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
                         />
-                        <div className="w-[40%]">
+                        <div className="w-[70%] sm:w-[40%]">
                           <p className="text-gray-500">Phone Number</p>
                           <input
                             type="text"
@@ -310,7 +310,7 @@ function ProfilePage() {
                           size={40}
                           className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
                         />
-                        <div className="w-[40%]">
+                        <div className="w-[70%] sm:w-[40%]">
                           <p className="text-gray-500">
                             Enter password to edit
                           </p>
@@ -332,7 +332,7 @@ function ProfilePage() {
                           size={40}
                           className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
                         />
-                        <div className="w-[40%]">
+                        <div className="w-[70%] sm:w-[40%]">
                           <p className="text-gray-500">Name</p>
                           <p className="bg-slate-500/10 p-2 py-2 mt-1 rounded border-2 border-slate-800">
                             {user.name}
@@ -344,7 +344,7 @@ function ProfilePage() {
                           size={40}
                           className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
                         />
-                        <div className="w-[40%]">
+                        <div className="w-[70%] sm:w-[40%]">
                           <p className="text-gray-500">Email</p>
                           <p className="bg-slate-500/10 p-2 py-2 mt-1 rounded border-2 border-slate-800">
                             {user.email}
@@ -356,7 +356,7 @@ function ProfilePage() {
                           size={40}
                           className=" box-shadow shadow-sm shadow-white p-2 rounded-full"
                         />
-                        <div className="w-[40%]">
+                        <div className="w-[70%] sm:w-[40%]">
                           <p className="text-gray-500 ">Phone Number</p>
                           <p className="bg-slate-500/10 p-2 py-2 mt-1 rounded border-2 border-slate-800">
                             {user.phoneNumber}
@@ -502,7 +502,7 @@ function ProfilePage() {
 
                         <button
                           type="submit"
-                          className=" mt-2 mx-auto rounded-lg px-10 py-2 hover:bg-slate-500 bg-slate-800 w-[40%]"
+                          className=" mt-2 mx-auto rounded-lg px-10 py-2 hover:bg-slate-500 bg-slate-800 w-[70%] sm:w-[40%]"
                         >
                           Enter
                         </button>
